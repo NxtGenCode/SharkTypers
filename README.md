@@ -1,2 +1,4 @@
 # SpeedTypers
-test
+SpeedTypers Project
+-------------------------
+
