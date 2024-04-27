@@ -1,0 +1,45 @@
+*{
+    padding:0px;
+    margin:0px;
+}
+
+body{
+    width:960px;
+    background-color: #0D0630;
+    color: #fff;
+    margin: auto;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#game-word{
+    color:green;
+}
+
+section#game-area{
+    background-color: #18314F;
+    padding:25px;
+}
+
+#type-racer-box{
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+}
+
+p#game-text{
+    font-size:1.5em;
+    padding:25px;
+    background-color: #0B1724;
+}
+
+input[type="text"]{
+    margin-top:15px;
+    padding: 15px;
+    font-size: 1.5em;
+    width: 85%;
+}
