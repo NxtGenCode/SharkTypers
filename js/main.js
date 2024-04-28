@@ -28,6 +28,16 @@ function firstWordBeforeEmpty(str) {
     return words[0];
 }
 
+function searchWordBeforeEmpty(str, index) {
+    if (str == null) {
+        return null;
+    }
+
+    const words = str.split(' ');
+
+    return words[index];
+}
+
 function randomTextPrompt() {
     let randomPrompt = null;
     let randomNumber = Math.floor((Math.random() * TEXT_PROMPTS.length));
@@ -39,35 +49,49 @@ function randomTextPrompt() {
 let currentTextPrompt = randomTextPrompt();
 let currentWordToType = firstWordBeforeEmpty(currentTextPrompt);
 let currentWordCharIndex = 0;
-let currentCharacterToType = firstWordBeforeEmpty(currentWordToType[currentWordCharIndex]);
-console.log("CurrentCharacterToType = "+currentCharacterToType);
+let currentWordIndex = 0;
+
+let currentCharacterToType = firstWordBeforeEmpty(currentWordToType[0]);
+
+let characterToTypeSpan = document.createElement("span");
+let characterNodeElement = document.createTextNode(currentTextPrompt);
+characterToTypeSpan.appendChild(characterNodeElement);
+gameText.append(characterToTypeSpan);
 
 function onKeyDown(event) {
     let key = event.key;
     
     if (key === currentCharacterToType) {
+        currentWordToType
         correctCharacters += key;
         currentWordCharIndex += 1;
         currentCharacterToType = firstWordBeforeEmpty(currentWordToType[currentWordCharIndex]);
         console.log("CurrentCharacterToType = "+currentCharacterToType);
-        
-        console.log("correctCharacters: "+correctCharacters);
-        console.log("success!");
+        console.log("CorrectCharacters: "+correctCharacters);
     } else {
-        if (key == " ") {
+        if (key == " ") { // SPACE_BAR
+            console.log("Space button hit.");
             if (currentWordToType == correctCharacters) {
-                console.log("first word done!");
+                console.log("First word completed!");
+                currentWordIndex += 1;
                 // Reset 
-                userTextInput.innerHTML = "";
+                userTextInput.value = "";
+                correctCharacters = "";
+                currentWordCharIndex = 0;
+                currentWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex);
+                currentCharacterToType = currentWordToType[0];
+                console.log("Next Word To Type: "+currentWordToType);
+                console.log("CurrentCharacterToType: "+currentCharacterToType);
+                // update next word to type
+                // rest index
+                console.log(userTextInput.value);
+                console.log("NEXT WORD: "+currentWordToType);
             }
-            console.log("Space button");
+            console.log("CorrectCharacters: "+correctCharacters);
         }
-        console.log("failure!");
-        console.log(currentCharacterToType);
+        console.log("Incorrect Key!");
     }
-    console.log("key pressed: "+key);
-    console.log("current word to type: "+currentWordToType);
+    console.log("Current word to type: "+currentWordToType);
 }
 
-gameText.innerHTML = currentTextPrompt;
 userTextInput.addEventListener("keypress", onKeyDown);
