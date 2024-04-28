@@ -4,10 +4,6 @@ const gameText = document.querySelector("#game-text");
 const userTextInput = document.querySelector("#user-text-input");
 const countdownMessage = document.querySelector("#countdown-msg");
 const timerText = document.querySelector("#timer");
-
-let currentTextPrompt = randomTextPrompt();
-let firstWord = firstWordBeforeEmpty(currentTextPrompt);
-
 const TEXT_PROMPTS =
 [
     "He sat across from her trying to imagine it was the first time. It wasn't. Had it been a hundred? It quite possibly could have been. Two hundred? Probably not. His mind wandered until he caught himself and again tried to imagine it was the first time.",
@@ -18,7 +14,15 @@ const TEXT_PROMPTS =
     "The leather jacked showed the scars of being his favorite for years. It wore those scars with pride, feeling that they enhanced his presence rather than diminishing it. The scars gave it character and had not overwhelmed to the point that it had become ratty. The jacket was in its prime and it knew it."
 ];
 
+let wordToSpell = null;
+let nextCharacterToType = null;
+let correctCharacters = "";
+
 function firstWordBeforeEmpty(str) {
+    if (str == null) {
+        return null;
+    }
+
     const words = str.split(' ');
 
     return words[0];
@@ -32,10 +36,37 @@ function randomTextPrompt() {
     return randomPrompt;
 }
 
+let currentTextPrompt = randomTextPrompt();
+let currentWordToType = firstWordBeforeEmpty(currentTextPrompt);
+let currentWordCharIndex = 0;
+let currentCharacterToType = firstWordBeforeEmpty(currentWordToType[currentWordCharIndex]);
+console.log("CurrentCharacterToType = "+currentCharacterToType);
+
 function onKeyDown(event) {
     let key = event.key;
     
+    if (key === currentCharacterToType) {
+        correctCharacters += key;
+        currentWordCharIndex += 1;
+        currentCharacterToType = firstWordBeforeEmpty(currentWordToType[currentWordCharIndex]);
+        console.log("CurrentCharacterToType = "+currentCharacterToType);
+        
+        console.log("correctCharacters: "+correctCharacters);
+        console.log("success!");
+    } else {
+        if (key == " ") {
+            if (currentWordToType == correctCharacters) {
+                console.log("first word done!");
+                // Reset 
+                userTextInput.innerHTML = "";
+            }
+            console.log("Space button");
+        }
+        console.log("failure!");
+        console.log(currentCharacterToType);
+    }
     console.log("key pressed: "+key);
+    console.log("current word to type: "+currentWordToType);
 }
 
 gameText.innerHTML = currentTextPrompt;
