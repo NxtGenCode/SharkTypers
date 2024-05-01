@@ -1,9 +1,17 @@
+/**
+ * 
+ * Main Prototype Script for TyperRacers
+ * 
+ */
+
 const gameArea = document.querySelector("#game-area");
 const gameText = document.querySelector("#game-text");
 
 const userTextInput = document.querySelector("#user-text-input");
 const countdownMessage = document.querySelector("#countdown-msg");
 const timerText = document.querySelector("#timer");
+
+const SPACE_BAR_KEY = " ";
 const TEXT_PROMPTS =
 [
     "He sat across from her trying to imagine it was the first time. It wasn't. Had it been a hundred? It quite possibly could have been. Two hundred? Probably not. His mind wandered until he caught himself and again tried to imagine it was the first time.",
@@ -15,8 +23,24 @@ const TEXT_PROMPTS =
 ];
 
 let wordToSpell = null;
+let totalWordsCompleted = 0;
 let nextCharacterToType = null;
 let correctCharacters = "";
+
+let currentTextPrompt = randomTextPrompt();
+let totalWordsInPrompt = wordsLen(currentTextPrompt);
+let currentWordToType = firstWordBeforeEmpty(currentTextPrompt);
+let currentWordCharIndex = 0;
+let currentWordIndex = 0;
+
+let currentCharacterToType = firstWordBeforeEmpty(currentWordToType[0]);
+let characterToTypeSpan = document.createElement("span");
+let characterNodeElement = document.createTextNode(currentTextPrompt);
+
+function onStart() {
+    characterToTypeSpan.appendChild(characterNodeElement);
+    gameText.append(characterToTypeSpan);
+}
 
 function firstWordBeforeEmpty(str) {
     if (str == null) {
@@ -24,9 +48,13 @@ function firstWordBeforeEmpty(str) {
     }
 
     const words = str.split(' ');
-
     return words[0];
 }
+
+function wordsLen(str) { 
+    const array = str.trim().split(/\s+/); 
+    return array.length; 
+} 
 
 function searchWordBeforeEmpty(str, index) {
     if (str == null) {
@@ -34,7 +62,6 @@ function searchWordBeforeEmpty(str, index) {
     }
 
     const words = str.split(' ');
-
     return words[index];
 }
 
@@ -46,52 +73,55 @@ function randomTextPrompt() {
     return randomPrompt;
 }
 
-let currentTextPrompt = randomTextPrompt();
-let currentWordToType = firstWordBeforeEmpty(currentTextPrompt);
-let currentWordCharIndex = 0;
-let currentWordIndex = 0;
-
-let currentCharacterToType = firstWordBeforeEmpty(currentWordToType[0]);
-
-let characterToTypeSpan = document.createElement("span");
-let characterNodeElement = document.createTextNode(currentTextPrompt);
-characterToTypeSpan.appendChild(characterNodeElement);
-gameText.append(characterToTypeSpan);
-
 function onKeyDown(event) {
     let key = event.key;
     
     if (key === currentCharacterToType) {
-        currentWordToType
         correctCharacters += key;
         currentWordCharIndex += 1;
         currentCharacterToType = firstWordBeforeEmpty(currentWordToType[currentWordCharIndex]);
         console.log("CurrentCharacterToType = "+currentCharacterToType);
         console.log("CorrectCharacters: "+correctCharacters);
     } else {
-        if (key == " ") { // SPACE_BAR
+        if (key == SPACE_BAR_KEY) { // SPACE_BAR
+            event.preventDefault();
+
             console.log("Space button hit.");
-            if (currentWordToType == correctCharacters) {
-                console.log("First word completed!");
+            if (userTextInput.value == currentWordToType) { // Word Completion Condition
+                totalWordsCompleted += 1;
                 currentWordIndex += 1;
-                // Reset 
                 userTextInput.value = "";
                 correctCharacters = "";
                 currentWordCharIndex = 0;
                 currentWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex);
-                currentCharacterToType = currentWordToType[0];
-                console.log("Next Word To Type: "+currentWordToType);
-                console.log("CurrentCharacterToType: "+currentCharacterToType);
-                // update next word to type
-                // rest index
-                console.log(userTextInput.value);
-                console.log("NEXT WORD: "+currentWordToType);
+                if (currentWordToType != null) {
+                    currentCharacterToType = currentWordToType[0];
+                    console.log("NEXT WORD: "+currentWordToType);
+                    console.log("CurrentCharacterToType: "+currentCharacterToType);
+                }
+                console.log("totalWordsCompleted: "+totalWordsCompleted);
+            }
+            if (totalWordsCompleted == totalWordsInPrompt) {
+                console.log("COMPLETED THE RACE!");
+                totalWordsCompleted = 0;
+                userTextInput.value = "YOU HAVE COMPLETED THE PROMPT!";
+                return;
             }
             console.log("CorrectCharacters: "+correctCharacters);
         }
+        console.log("CorrectCharacters: "+correctCharacters);
         console.log("Incorrect Key!");
     }
     console.log("Current word to type: "+currentWordToType);
 }
 
+/**
+ * Event Listeners
+ */
 userTextInput.addEventListener("keypress", onKeyDown);
+///////////////////////////////////////////////////////
+
+/**
+ * Initialize
+ */
+onStart();
