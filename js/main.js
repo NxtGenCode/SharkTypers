@@ -38,35 +38,34 @@ let characterNodeElement = document.createTextNode(currentTextPrompt);
  * SPAN ELEMENTS
  */
 let typingCharsSpan = null;
-let wordsToTypeSpan = null;
+let charactersToTypeSpan = null;
 let promptLeftSpan = null;
 
 function InitializeGameElements() {
     if (typingCharsSpan == null) {
-        typingCharsSpan = document.createElement("span");
-        typingCharsSpan.className = "testTypingCharsSpan";
-        gameText.append(typingCharsSpan);
-
         let typingCharsTextNode = document.createTextNode(currentCharToTypeNext);
+
+        typingCharsSpan = document.createElement("span");
+        typingCharsSpan.className = "correctCharactersTypedSpan";
         typingCharsSpan.appendChild(typingCharsTextNode);
+
+        gameText.append(typingCharsSpan);
     }
 
-    if (wordsToTypeSpan == null) {
-        wordsToTypeSpan = document.createElement("span");
-        wordsToTypeSpan.className = "testWordsToTypeSpan";
+    if (charactersToTypeSpan == null) {
+        charactersToTypeSpan = document.createElement("span");
+        charactersToTypeSpan.className = "charactersToTypeSpan";
         
         let customString = currentWordToType.slice(1);
         let wordsToTypeTextNode = document.createTextNode(customString);
-        wordsToTypeSpan.appendChild(wordsToTypeTextNode);
-        gameText.append(wordsToTypeSpan);
-        console.log("WORDS TO TYPE FIRST = "+wordsToTypeSpan.innerText);
-
-
+        charactersToTypeSpan.appendChild(wordsToTypeTextNode);
+        gameText.append(charactersToTypeSpan);
+        console.log("CHARACTERS TO TYPE FIRST = "+charactersToTypeSpan.innerText);
     }
 
     if (promptLeftSpan == null) {
         promptLeftSpan = document.createElement("span")
-        promptLeftSpan.className = "testPromptLeftSpan";
+        promptLeftSpan.className = "promptLeftSpan";
 
         let promptLeftString = currentTextPrompt.slice(currentWordToType.length, currentTextPrompt.length);
         let promptLeftTextNode = document.createTextNode(promptLeftString);
@@ -116,9 +115,6 @@ function randomTextPrompt() {
 }
 
 console.log("currentCharToTypeNext: " + currentCharToTypeNext);
-
-let nextCharacterToTypeSpan = null;
-
 function onKeyDown(event) {
     let key = event.key;
 
@@ -134,11 +130,11 @@ function onKeyDown(event) {
         if (currentWordCharCount <= 0) {
             currentWordCharCount = 0;
             console.log("currentWordCharCount = "+currentWordCharCount);
-            if (nextCharacterToTypeSpan != null) {
-                nextCharacterToTypeSpan.remove();
-                nextCharacterToTypeSpan = null;
-                console.log("remove span");
-            }
+            //if (nextCharacterToTypeSpan != null) {
+            //    nextCharacterToTypeSpan.remove();
+            //    nextCharacterToTypeSpan = null;
+            //    console.log("remove span");
+            //}
         }
     }
 
@@ -146,6 +142,10 @@ function onKeyDown(event) {
         currentWordCharCount += 1;
         currentCharToTypeNext = currentWordToType[currentWordCharCount];
 
+        var undefinedCharReplacement = "&nbsp";
+        if (currentCharToTypeNext == undefined) {
+            currentCharToTypeNext = undefinedCharReplacement;
+        }
         //let typingCharsTextNode = document.createTextNode(currentCharToTypeNext);
         console.log("currentCharToTypeNext="+currentCharToTypeNext);
         if (currentWordCharCount > 1) {
@@ -155,35 +155,42 @@ function onKeyDown(event) {
             if (currentWordToType[currentWordCharCount - 1] == undefined) {
                 currentWordToType[currentWordCharCount - 1] = " ";
             }
+            //nextCharacterToTypeSpan.innerHTML = currentCharToTypeNext;
             typingCharsSpan.innerHTML += currentWordToType[currentWordCharCount - 1];
-            let newWordsToTypeString = wordsToTypeSpan.innerText.slice(1);
+            let newWordsToTypeString = charactersToTypeSpan.innerText.slice(1);
             console.log("newWordsToTypeString: "+newWordsToTypeString);
-            wordsToTypeSpan.innerText = newWordsToTypeString
-            console.log("WordsToTypeSpan.innerText="+wordsToTypeSpan.innerText);
-            if (currentCharToTypeNext.innerText == undefined) {
+            charactersToTypeSpan.innerHTML = newWordsToTypeString;
+
+            if (newWordsToTypeString == " ") {
+                console.log("Adding space char.");
+                charactersToTypeSpan.innerHTML = " ";
+            }
+            console.log("charactersToTypeSpan.innerText="+charactersToTypeSpan.innerText);
+
+            //const custom_style={
+            //    display: "block",
+            //    color: "red",
+            //    textdecoration: "underline"
+            //};
+
+            //Object.assign(typingCharsSpan, custom_style);
+            if (currentCharToTypeNext == undefined) {
                 let spaceChar = " ";
-                currentCharToTypeNext.innerText = spaceChar;
-                
+                currentCharToTypeNext = spaceChar;
                 console.log("ran space bar underfined!");
             }
-            console.log("ran !"+wordsToTypeSpan.innerText);
+            console.log("ran !"+charactersToTypeSpan.innerText);
         }
 
         if (currentWordCharCount == 1) {
-            nextCharacterToTypeSpan = document.createElement("span");
-            nextCharacterToTypeSpan.className = "nextCharacterToTypeSpan";
-            gameText.append(nextCharacterToTypeSpan);
+            //nextCharacterToTypeSpan = document.createElement("span");
+            //nextCharacterToTypeSpan.className = "nextCharacterToTypeSpan";
+            //gameText.append(nextCharacterToTypeSpan);
 
-            let nextCharacterToTypeSpanTextNode = document.createTextNode(currentCharToTypeNext);
-            nextCharacterToTypeSpan.appendChild(nextCharacterToTypeSpanTextNode);
+            //let nextCharacterToTypeSpanTextNode = document.createTextNode(currentCharToTypeNext);
+            //nextCharacterToTypeSpan.appendChild(nextCharacterToTypeSpanTextNode);
         } else {
 
-        }
-
-        
-
-        if (currentCharToTypeNext == undefined) {
-            currentCharToTypeNext = " ";
         }
         console.log("currentCharToTypeNext: " + currentCharToTypeNext);
     }

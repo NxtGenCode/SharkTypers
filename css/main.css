@@ -3,6 +3,20 @@
     margin:0px;
 }
 
+span.correctCharactersTypedSpan {
+    text-decoration: underline;
+    text-decoration-color: green;
+    color: green;
+}
+
+span.charactersToTypeSpan {
+    text-decoration:underline;
+}
+
+span.promptLeftSpan {
+    color:white;
+}
+
 body {
     width:960px;
     background-color: #0D0630;
