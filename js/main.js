@@ -12,6 +12,7 @@ const countdownMessage = document.querySelector("#countdown-msg");
 const timerText = document.querySelector("#timer");
 
 const SPACE_BAR_KEY = " ";
+
 const TEXT_PROMPTS =
     [
         "He sat across from her trying to imagine it was the first time. It wasn't. Had it been a hundred? It quite possibly could have been. Two hundred? Probably not. His mind wandered until he caught himself and again tried to imagine it was the first time.",
@@ -24,6 +25,7 @@ const TEXT_PROMPTS =
 
 let currentTextPrompt = randomTextPrompt();
 let totalWordsInPrompt = wordsLen(currentTextPrompt);
+
 let currentWordToType = firstWordBeforeEmpty(currentTextPrompt);
 let currentWordIndex = 0;
 let totalWordsCompleted = 0;
@@ -31,56 +33,83 @@ let totalWordsCompleted = 0;
 let currentCharToTypeNext = currentWordToType[0];
 let currentWordCharCount = 0;
 
-let characterToTypeSpan = document.createElement("span");
-let characterNodeElement = document.createTextNode(currentTextPrompt);
-
 /**
  * SPAN ELEMENTS
  */
-let typingCharsSpan = null;
-let charactersToTypeSpan = null;
+let completedWords = null;
+let activeCharacterSpan = null;
+let correctCharacters = null;
+let incorrectCharacters = null; // NEED TO ADD FUNCTIONALITY
+let remainingCharacters = null;
 let promptLeftSpan = null;
 
-function InitializeGameElements() {
-    if (typingCharsSpan == null) {
-        let typingCharsTextNode = document.createTextNode(currentCharToTypeNext);
+/**
+ * Initalizes All Objects
+ */
+function initializeGameElements() {
+    if (completedWords == null) {
+        completedWords = document.createElement("span");
+        completedWords.className = "completed-words";
 
-        typingCharsSpan = document.createElement("span");
-        typingCharsSpan.className = "correctCharactersTypedSpan";
-        typingCharsSpan.appendChild(typingCharsTextNode);
-
-        gameText.append(typingCharsSpan);
+        gameText.append(completedWords);
     }
 
-    if (charactersToTypeSpan == null) {
-        charactersToTypeSpan = document.createElement("span");
-        charactersToTypeSpan.className = "charactersToTypeSpan";
-        
+    if (correctCharacters == null) {
+        correctCharacters = document.createElement("span");
+        correctCharacters.className = "correct-characters";
+
+        gameText.append(correctCharacters);
+    }
+
+    if (incorrectCharacters == null) {
+        incorrectCharacters = document.createElement("span");
+        incorrectCharacters.className = "incorrect-characters";
+
+        gameText.append(incorrectCharacters);
+    }
+
+    if (activeCharacterSpan == null) {
+        let activeCharsTextNode = document.createTextNode(currentCharToTypeNext);
+
+        activeCharacterSpan = document.createElement("span")
+        activeCharacterSpan.className = "active-character";
+        activeCharacterSpan.append(activeCharsTextNode);
+
+        gameText.append(activeCharacterSpan);
+    }
+
+    if (remainingCharacters == null) {
         let customString = currentWordToType.slice(1);
         let wordsToTypeTextNode = document.createTextNode(customString);
-        charactersToTypeSpan.appendChild(wordsToTypeTextNode);
-        gameText.append(charactersToTypeSpan);
-        console.log("CHARACTERS TO TYPE FIRST = "+charactersToTypeSpan.innerText);
+
+        remainingCharacters = document.createElement("span");
+        remainingCharacters.className = "remaining-characters";
+        remainingCharacters.appendChild(wordsToTypeTextNode);
+
+        gameText.append(remainingCharacters);
     }
 
     if (promptLeftSpan == null) {
-        promptLeftSpan = document.createElement("span")
-        promptLeftSpan.className = "promptLeftSpan";
-
         let promptLeftString = currentTextPrompt.slice(currentWordToType.length, currentTextPrompt.length);
         let promptLeftTextNode = document.createTextNode(promptLeftString);
+
+        promptLeftSpan = document.createElement("span")
+        promptLeftSpan.className = "promptLeftSpan";
         promptLeftSpan.appendChild(promptLeftTextNode);
 
         gameText.append(promptLeftSpan);
     }
 }
 
-function UpdateGameElements() {
-
+/**
+ * Updates All Logic For Our Game
+ */
+function updateGameElements() {
+    //TO-DO
 }
 
 function onStart() {
-    InitializeGameElements();
+    initializeGameElements();
 }
 
 function firstWordBeforeEmpty(str) {
@@ -114,118 +143,172 @@ function randomTextPrompt() {
     return randomPrompt;
 }
 
-console.log("currentCharToTypeNext: " + currentCharToTypeNext);
+/**
+ * Handles All Keyboard (KeyDown) Events.
+ */
 function onKeyDown(event) {
     let key = event.key;
+    console.log("Key pressed: " + key);
 
-    console.log("key pressed: " + key);
     if (key == "Backspace" || key == "Delete") {
+        console.log("Backspace or Del Button Key Down.");
         if (currentWordCharCount == 0) {
+            console.log("You don't have any characters to delete!");
             return;
         }
         currentWordCharCount -= 1;
-        console.log("DEL BUTTON");
-
-        typingCharsSpan.innerHTML = typingCharsSpan.innerHTML.substring(currentWordCharCount, typingCharsSpan.length - 1);
-        if (currentWordCharCount <= 0) {
+        if (currentWordCharCount < 0) {
             currentWordCharCount = 0;
-            console.log("currentWordCharCount = "+currentWordCharCount);
-            //if (nextCharacterToTypeSpan != null) {
-            //    nextCharacterToTypeSpan.remove();
-            //    nextCharacterToTypeSpan = null;
-            //    console.log("remove span");
-            //}
         }
+
+        let lastCharacter = correctCharacters.innerHTML.substring(currentWordCharCount, correctCharacters.length);
+        let updatedCharactersLeftToType = activeCharacterSpan.innerText.concat(remainingCharacters.innerText);
+
+        correctCharacters.innerHTML = correctCharacters.innerHTML.substring(currentWordCharCount, correctCharacters.length - 1);
+        activeCharacterSpan.innerText = lastCharacter;
+        remainingCharacters.innerText = updatedCharactersLeftToType
+        currentCharToTypeNext = currentWordToType[currentWordCharCount];
+        incorrectCharacters.innerText += incorrectCharacters.innerText.substring(0, 1);
     }
 
     if (key == currentCharToTypeNext) {
-        currentWordCharCount += 1;
-        currentCharToTypeNext = currentWordToType[currentWordCharCount];
+        if (currentWordToType.lastIndexOf(userTextInput.value) != -1) {
+            console.log("key: " + currentCharToTypeNext);
 
-        var undefinedCharReplacement = "&nbsp";
-        if (currentCharToTypeNext == undefined) {
-            currentCharToTypeNext = undefinedCharReplacement;
-        }
-        //let typingCharsTextNode = document.createTextNode(currentCharToTypeNext);
-        console.log("currentCharToTypeNext="+currentCharToTypeNext);
-        if (currentWordCharCount > 1) {
-            if (currentCharToTypeNext == undefined) {
-                currentCharToTypeNext = " ";
+            if (currentCharToTypeNext == " ") {
+                console.log("SPACE ENTERED HERE");
+                event.preventDefault();
+
+                console.log("currentWordToType: " + currentWordToType);
+                if (userTextInput.value == currentWordToType) { // Word Completion Condition
+                    console.log("Word Completed.")
+
+                    totalWordsCompleted += 1;
+                    currentWordIndex += 1;
+                    currentWordCharCount = 0;
+                    completedWords.innerHTML += userTextInput.value + " ";
+                    userTextInput.value = "";
+                    currentWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex);
+                    correctCharacters.innerHTML = "";
+
+                    if (currentWordToType != null) {
+                        console.log("Current Word To Type: " + currentWordToType);
+
+                        activeCharacterSpan.innerHTML = currentWordToType[0];
+                        promptLeftSpan.innerHTML = promptLeftSpan.innerHTML.slice(currentWordToType.length + 1);
+                        currentCharToTypeNext = currentWordToType[0];
+
+                        if (activeCharacterSpan.innerHTML == undefined) {
+                            activeCharacterSpan.innerHTML = " ";
+                        }
+
+                        if (remainingCharacters.innerHTML == "") {
+                            remainingCharacters.innerHTML += " ";
+                        } else {
+                            remainingCharacters.innerHTML = currentWordToType.slice(1) + " ";
+                        }
+                    }
+
+                    console.log("Total Words Completed: " + totalWordsCompleted);
+                }
+
+                if (totalWordsCompleted == totalWordsInPrompt) { // Prompt Completion Condition
+                    totalWordsCompleted = 0;
+                    userTextInput.value = "YOU HAVE COMPLETED THE PROMPT!";
+                    return;
+                }
             }
-            if (currentWordToType[currentWordCharCount - 1] == undefined) {
-                currentWordToType[currentWordCharCount - 1] = " ";
+
+            if (key != " ") {
+                currentWordCharCount += 1;
+                currentCharToTypeNext = currentWordToType[currentWordCharCount];
+    
+                if (currentCharToTypeNext == undefined || currentCharToTypeNext == "") {
+                    currentCharToTypeNext = " ";
+                }
+    
+                if (activeCharacterSpan.firstChild) {
+                    activeCharacterSpan.firstChild.remove();
+                }
+    
+                correctCharacters.innerText += currentWordToType[currentWordCharCount - 1];
+                activeCharacterSpan.innerText = currentCharToTypeNext;
+                remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+    
+                if (remainingCharacters.innerText == "") {
+                    remainingCharacters.innerText = remainingCharacters.innerText + " ";
+                }
+                if (activeCharacterSpan.innerText == " " || activeCharacterSpan.innerText == "undefined") {
+                    activeCharacterSpan.innerText = "" + " ";
+                }
+                if (currentCharToTypeNext == undefined || currentCharToTypeNext == "") {
+                    currentCharToTypeNext = " ";
+                }
             }
-            //nextCharacterToTypeSpan.innerHTML = currentCharToTypeNext;
-            typingCharsSpan.innerHTML += currentWordToType[currentWordCharCount - 1];
-            let newWordsToTypeString = charactersToTypeSpan.innerText.slice(1);
-            console.log("newWordsToTypeString: "+newWordsToTypeString);
-            charactersToTypeSpan.innerHTML = newWordsToTypeString;
 
-            if (newWordsToTypeString == " ") {
-                console.log("Adding space char.");
-                charactersToTypeSpan.innerHTML = " ";
-            }
-            console.log("charactersToTypeSpan.innerText="+charactersToTypeSpan.innerText);
-
-            //const custom_style={
-            //    display: "block",
-            //    color: "red",
-            //    textdecoration: "underline"
-            //};
-
-            //Object.assign(typingCharsSpan, custom_style);
-            if (currentCharToTypeNext == undefined) {
-                let spaceChar = " ";
-                currentCharToTypeNext = spaceChar;
-                console.log("ran space bar underfined!");
-            }
-            console.log("ran !"+charactersToTypeSpan.innerText);
-        }
-
-        if (currentWordCharCount == 1) {
-            //nextCharacterToTypeSpan = document.createElement("span");
-            //nextCharacterToTypeSpan.className = "nextCharacterToTypeSpan";
-            //gameText.append(nextCharacterToTypeSpan);
-
-            //let nextCharacterToTypeSpanTextNode = document.createTextNode(currentCharToTypeNext);
-            //nextCharacterToTypeSpan.appendChild(nextCharacterToTypeSpanTextNode);
+            
         } else {
+            incorrectCharacters.innerText += activeCharacterSpan.innerText;
 
-        }
-        console.log("currentCharToTypeNext: " + currentCharToTypeNext);
-    }
-    if (key == SPACE_BAR_KEY) {
-        event.preventDefault();
-
-        console.log("current word to type = " + currentWordToType == userTextInput.value)
-        if (userTextInput.value == currentWordToType) { // Word Completion Condition
-            totalWordsCompleted += 1;
-            currentWordIndex += 1;
-            userTextInput.value = "";
-            currentWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex);
-            if (currentWordToType != null) {
-                console.log("NEXT WORD: " + currentWordToType);
+            if (activeCharacterSpan.firstChild) {
+                activeCharacterSpan.firstChild.remove();
             }
-            console.log("totalWordsCompleted: " + totalWordsCompleted);
+            activeCharacterSpan.innerText += remainingCharacters.innerText.slice(1);
+            remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+            console.log("test1");
         }
 
-        if (totalWordsCompleted == totalWordsInPrompt) { // Prompt Completion Condition
-            console.log("COMPLETED THE RACE!");
-            totalWordsCompleted = 0;
-            userTextInput.value = "YOU HAVE COMPLETED THE PROMPT!";
-            return;
+        console.log("Current Word To Type: " + currentWordToType);
+        console.log("Current Character To Type: " + currentCharToTypeNext);
+    } else {
+
+        if (key != "Shift" && key != "Control" && key != "Alt" && key != "CapsLock" && key != "Tab" && key != "" && 
+            key != "Backspace" && key != "Delete" && key != "Meta") {
+            // active -> incorrect
+            // remaining -> active
+            // promp update ? maybe
+            if (activeCharacterSpan.innerText == "") {
+                activeCharacterSpan.innerText += " ";
+            }
+            
+            incorrectCharacters.innerText += activeCharacterSpan.innerText; // correct
+
+            if (activeCharacterSpan.firstChild != null) {
+                activeCharacterSpan.firstChild.remove();
+            }
+            activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1); // correct
+            remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+
+            if (remainingCharacters.innerText === "") {
+                //activeCharacterSpan.innerHTML = currentWordToType[0];
+                console.log("WIEFHIWEHFIWEHFIWEF");
+                let nextWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex + 1);
+                promptLeftSpan.innerHTML = promptLeftSpan.innerHTML.slice(nextWordToType.length + 1);
+                
+                //if (activeCharacterSpan.firstChild != null) {
+                //    activeCharacterSpan.firstChild.remove();
+                //}
+                
+               // console.log("NEW WORD TO TYPE: "+nextWordToType);
+                //activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1);
+                //remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+            }
+
+            if (currentWordToType.lastIndexOf(userTextInput.value) == -1) {
+                console.log("key: " + currentCharToTypeNext);
+            }
+            console.log("Incorrect KEY!")
         }
     }
-    console.log("Current word to type: " + currentWordToType);
 }
 
-/**
- * Event Listeners
- */
-userTextInput.addEventListener("keydown", onKeyDown);
-///////////////////////////////////////////////////////
+    /**
+     * Event Listeners
+     */
+    userTextInput.addEventListener("keydown", onKeyDown);
+    ///////////////////////////////////////////////////////
 
-/**
- * Initialize
- */
-onStart();
+    /**
+     * METHOD CALLS
+     */
+    onStart();
