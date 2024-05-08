@@ -19,7 +19,7 @@ As you progress through the game, unlock a treasure trove of rewards! From funky
 
 Ready to embark on this epic typing adventure? Join the SharkTypers community today and let the games begin!
 
-👉 **Get Started:** [Link to GitHub Repository]
+👉 **Get Started:** [Link to GitHub Repository](https://github.com/NxtGenCode/SpeedTypers)
 
 🌟 **Features:**  
 - Fun and addictive typing gameplay  
