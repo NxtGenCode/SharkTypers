@@ -1,4 +1,5 @@
-# SharkTypers Project
+![logo](https://github.com/NxtGenCode/SpeedTypers/assets/23224948/0abfa0d8-41fb-4ddc-b91c-e5bb2ae913e4)
+
 -------------------------
 
 🦈🔤 Dive into the Excitement with SharkTypers! 🦈🔤
