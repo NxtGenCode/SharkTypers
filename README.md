@@ -32,7 +32,7 @@ Ready to embark on this epic typing adventure? Join the SharkTypers community to
 Love SharkTypers? Help us spread the word! Share your high scores, gameplay screenshots, and feedback with #SharkTypers on social media. Let's build a vibrant community of typing enthusiasts together!
 
 👨‍💻 **Contributions Welcome:**  
-SharkTypers is an open-source project, and we welcome contributions from developers of all skill levels. Whether you're a seasoned coder or just starting out, there's a place for you in our community. Check out our [Contributing Guidelines] to get started.
+SharkTypers is an open-source project, and we welcome contributions from developers of all skill levels. Whether you're a seasoned coder or just starting out, there's a place for you in our community. Check out our [Contributing Guidelines](docs/CONTRIBUTING.md) to get started.
 
 🎉 **Join the Fun:**  
 Ready to dive into the excitement? Head over to our GitHub repository, download SharkTypers, and start typing your way to victory today!
