@@ -271,18 +271,16 @@ function onKeyDown(event) {
                 activeCharacterSpan.innerText += " ";
             }
             
-            incorrectCharacters.innerText += activeCharacterSpan.innerText; // correct
-
-            if (activeCharacterSpan.firstChild != null) {
-                activeCharacterSpan.firstChild.remove();
-            }
-            activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1); // correct
-            remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+            
+            
 
             if (remainingCharacters.innerText === "") {
                 //activeCharacterSpan.innerHTML = currentWordToType[0];
                 console.log("WIEFHIWEHFIWEHFIWEF");
                 let nextWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex + 1);
+                console.log("nextWordToType: "+nextWordToType);
+                console.log("remainingCharacters.innerText: "+remainingCharacters.innerText);
+                remainingCharacters.innerText = promptLeftSpan.innerHTML.substring(0, nextWordToType.length + 1);
                 promptLeftSpan.innerHTML = promptLeftSpan.innerHTML.slice(nextWordToType.length + 1);
                 
                 //if (activeCharacterSpan.firstChild != null) {
@@ -291,7 +289,15 @@ function onKeyDown(event) {
                 
                // console.log("NEW WORD TO TYPE: "+nextWordToType);
                 //activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1);
-                //remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
+                
+            } else {
+                incorrectCharacters.innerText += activeCharacterSpan.innerText; // correct
+
+                if (activeCharacterSpan.firstChild != null) {
+                    activeCharacterSpan.firstChild.remove();
+                }
+                activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1); // correct
+                remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
             }
 
             if (currentWordToType.lastIndexOf(userTextInput.value) == -1) {
