@@ -3,6 +3,54 @@
     margin:0px;
 }
 
+span.active-character::before {
+    font-size: 1em;
+    position: fixed;
+    content: "_";
+    float:left;
+    opacity: 0;
+    border-radius: 5px;
+    animation: blink 1s ease-in-out infinite;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-fill-mode: none;
+    animation-play-state: running;
+    animation-name: blink;
+    color:#00f1ff;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 1;
+    }
+}
+
+span.completed-words {
+    text-decoration-color: green;
+    color: green;
+}
+
+span.correct-characters {
+    text-decoration-color: green;
+    color: green;
+}
+
+span.incorrect-characters {
+    color: #803333;
+    background-color: #f0a3a3;
+}
+
+span.remaining-characters {
+    color:white;
+}
+
+span.promptLeftSpan {
+    color:white;
+}
+
 body {
     width:960px;
     background-color: #0D0630;
