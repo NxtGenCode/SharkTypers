@@ -192,6 +192,9 @@ a:active{color:#fff;}
         padding: 0px;
         border-radius: 0;
     }
+    #logo{
+        padding:5px;
+    }
     .mobile-button{
         display: block;
     }
