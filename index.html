@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>SpeedTypers - Home</title>
+        <title>SharkTypers - Play & Type!</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
         <link rel="stylesheet" href="./css/main.css">
     </head>
     <body>
         <div class="container">
             <header>
                 <div id="logo">
-                    <h1>SpeedTypers</h1>
+                    <a href="index.html">
+                        <img src="./img/logo.png" width="320" height="100%" alt="Shark Typers"/>
+                    </a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li class="mobile-button"><img src="./img/nav-menu.png" width="48" height="48" alt="Mobile Navigation"/></li>
+                        <div class="hide-mobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">HighScores</a></li>
+                        <li><a href="#">Create An Account</a></li>
+                        </div>
+                    </ul>
                 </div>
             </header>
-            <section id="game-area">
-                <div id="type-racer-box">
-                        <h2 id="countdown-msg">GO</h2> <span id="timer">1:00</span>
-                        <div id="game-text">
-                            
-                        </div>
-                        <input id="user-text-input" type="text" placeholder="Enter Text Here">
+            <div class="mainViewPort">
+                <div id="game-area">
+                    <div id="type-racer-box">
+                            <h2 class="countdown-msg">The race is about to start.</h2> 
+                            <div id="game-text">
+                                
+                            </div>
+                            <input id="user-text-input" type="text" placeholder="Enter Text Here">
+                            <div class="racer-buttons">
+                                <button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button>
+                            </div>
+                    </div>
                 </div>
-            </section>
-            <footer>©️ SpeedTypers 2024</footer>
+            </div>
+            <footer>© SharkTypers 2024</footer>
         </div>
         <script src="./js/main.js"></script>
     </body>
