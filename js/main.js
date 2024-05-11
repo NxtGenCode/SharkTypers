@@ -33,6 +33,11 @@ let totalWordsCompleted = 0;
 let currentCharToTypeNext = currentWordToType[0];
 let currentWordCharCount = 0;
 
+let MAX_MISTAKES = 6;
+let mistakes = 0;
+
+let previousUserTextInputValue = "";
+
 /**
  * SPAN ELEMENTS
  */
@@ -150,32 +155,67 @@ function onKeyDown(event) {
     let key = event.key;
     console.log("Key pressed: " + key);
 
+    console.log("currentWordCharCount: "+currentWordCharCount);
+
     if (key == "Backspace" || key == "Delete") {
         console.log("Backspace or Del Button Key Down.");
-        if (currentWordCharCount == 0) {
-            console.log("You don't have any characters to delete!");
-            return;
-        }
+        //if (currentWordCharCount == 0) {
+        //    console.log("You don't have any characters to delete!");
+        //    return;
+        //}
+        
         currentWordCharCount -= 1;
+        mistakes -= 1;
         if (currentWordCharCount < 0) {
             currentWordCharCount = 0;
         }
+        if (mistakes < 0) {
+            mistakes = 0;
+            return;
+        }
 
-        let lastCharacter = correctCharacters.innerHTML.substring(currentWordCharCount, correctCharacters.length);
         let updatedCharactersLeftToType = activeCharacterSpan.innerText.concat(remainingCharacters.innerText);
+        let lastIncorrectCharacterTyped = incorrectCharacters.innerText.slice(currentWordToType.length - 1, currentWordToType.length);
+        console.log("lastIncorrectCharacterTyped: "+lastIncorrectCharacterTyped)
+        if (incorrectCharacters.innerText.length > 0) {
+            previousActiveCharacter = incorrectCharacters.innerText.slice(currentWordToType.length - 1, currentWordToType.length);
+        } else {
+            previousActiveCharacter = " ";
+        }
 
-        correctCharacters.innerHTML = correctCharacters.innerHTML.substring(currentWordCharCount, correctCharacters.length - 1);
-        activeCharacterSpan.innerText = lastCharacter;
+        incorrectCharacters.innerText = incorrectCharacters.innerText.slice(0, incorrectCharacters.innerText.length - 1);
+        activeCharacterSpan.innerText = previousActiveCharacter;
         remainingCharacters.innerText = updatedCharactersLeftToType
         currentCharToTypeNext = currentWordToType[currentWordCharCount];
-        incorrectCharacters.innerText += incorrectCharacters.innerText.substring(0, 1);
+        correctCharacters.innerHTML = correctCharacters.innerHTML.substring(currentWordCharCount, correctCharacters.length - 1);
+        console.log("previousActiveChar: "+previousActiveCharacter);
+        console.log("incorrectCharacters.innerText.length: "+incorrectCharacters.innerText.length);
+        console.log("previousActiuveCgharacter = "+incorrectCharacters.innerText.slice(currentWordToType.length - 1, currentWordToType.length));
+        
+        
+    }
+
+    console.log("MISTAKES: "+mistakes);
+    if (mistakes >= MAX_MISTAKES) { // Prevent's User from typing anymore
+        if (event.shiftKey || event.altKey || event.ctrlKey || event.metaKey || event.tabKey ||
+            key === "Tab" || key === "ContextMenu" || key === "NumLock" || key === "Enter" ||
+            key === "ArrowUp" || key === "ArrowDown" || key === "ArrowLeft" || key === "ArrowRight" ||
+            key === "CapsLock" || key === "End" || key === "Insert" || key === "NumpadDecimal" ||
+            key === "NumpadEnter" || key === "PageDown" || key === "Clear" || key === "Home" ||
+            key === "PageUp" || key === "Space" || key === "Escape" || key === "F1" || key === "F2" ||
+            key === "F3" || key === "F4" || key === "F5" || key === "F6" || key === "F7" || key === "F8" ||
+            key === "F9" || key === "F10" || key === "F11" || key === "F12" || key === "ScrollLock" || key === "Pause") {
+            return;
+        }
+        userTextInput.value = userTextInput.value.substring(0, userTextInput.value.length - 1);
+        return;
     }
 
     if (key == currentCharToTypeNext) {
         if (currentWordToType.lastIndexOf(userTextInput.value) != -1) {
             console.log("key: " + currentCharToTypeNext);
 
-            if (currentCharToTypeNext == " ") {
+            if (key == " ") {
                 console.log("SPACE ENTERED HERE");
                 event.preventDefault();
 
@@ -217,12 +257,9 @@ function onKeyDown(event) {
                     userTextInput.value = "YOU HAVE COMPLETED THE PROMPT!";
                     return;
                 }
-            }
-
-            if (key != " ") {
+            } else if (key != " ") {
                 currentWordCharCount += 1;
                 currentCharToTypeNext = currentWordToType[currentWordCharCount];
-    
                 if (currentCharToTypeNext == undefined || currentCharToTypeNext == "") {
                     currentCharToTypeNext = " ";
                 }
@@ -248,6 +285,7 @@ function onKeyDown(event) {
 
             
         } else {
+            
             incorrectCharacters.innerText += activeCharacterSpan.innerText;
 
             if (activeCharacterSpan.firstChild) {
@@ -264,46 +302,34 @@ function onKeyDown(event) {
 
         if (key != "Shift" && key != "Control" && key != "Alt" && key != "CapsLock" && key != "Tab" && key != "" && 
             key != "Backspace" && key != "Delete" && key != "Meta") {
-            // active -> incorrect
-            // remaining -> active
-            // promp update ? maybe
             if (activeCharacterSpan.innerText == "") {
                 activeCharacterSpan.innerText += " ";
             }
             
-            
-            
-
             if (remainingCharacters.innerText === "") {
-                //activeCharacterSpan.innerHTML = currentWordToType[0];
-                console.log("WIEFHIWEHFIWEHFIWEF");
                 let nextWordToType = searchWordBeforeEmpty(currentTextPrompt, currentWordIndex + 1);
                 console.log("nextWordToType: "+nextWordToType);
-                console.log("remainingCharacters.innerText: "+remainingCharacters.innerText);
-                remainingCharacters.innerText = promptLeftSpan.innerHTML.substring(0, nextWordToType.length + 1);
-                promptLeftSpan.innerHTML = promptLeftSpan.innerHTML.slice(nextWordToType.length + 1);
+                incorrectCharacters.innerText += activeCharacterSpan.innerText;
                 
-                //if (activeCharacterSpan.firstChild != null) {
-                //    activeCharacterSpan.firstChild.remove();
-                //}
-                
-               // console.log("NEW WORD TO TYPE: "+nextWordToType);
-                //activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1);
+                activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1); // correct
+                if (activeCharacterSpan.innerText == "") {
+                    activeCharacterSpan.innerText += " ";
+                }
+                let trimmedPrompt = promptLeftSpan.innerHTML.trim();
+                console.log("trimmedPrompt: "+trimmedPrompt);
+                const trimmedPromptWords = trimmedPrompt.split(' ');
+                console.log("trimmedPromptWords[1]: "+trimmedPromptWords[0]);
+
+                remainingCharacters.innerText = trimmedPromptWords[0];
+                promptLeftSpan.innerHTML = promptLeftSpan.innerHTML.slice(nextWordToType.length + 1, promptLeftSpan.length);
                 
             } else {
-                incorrectCharacters.innerText += activeCharacterSpan.innerText; // correct
-
-                if (activeCharacterSpan.firstChild != null) {
-                    activeCharacterSpan.firstChild.remove();
-                }
+                incorrectCharacters.innerText += activeCharacterSpan.innerText;
                 activeCharacterSpan.innerText = remainingCharacters.innerText.substring(0, 1); // correct
                 remainingCharacters.innerText = remainingCharacters.innerText.slice(1);
             }
-
-            if (currentWordToType.lastIndexOf(userTextInput.value) == -1) {
-                console.log("key: " + currentCharToTypeNext);
-            }
-            console.log("Incorrect KEY!")
+            mistakes += 1;
+            console.log("mistakes: "+mistakes);
         }
     }
 }
