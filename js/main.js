@@ -3,13 +3,27 @@
  * Main Prototype Script for TyperRacers
  * 
  */
+const hideMobileBtn = document.querySelector(".mobile-button");
+const hideMobileDiv = document.querySelector(".hide-mobile");
+let mobileNavOpen = false;
+
+hideMobileBtn.addEventListener('click', () => {
+    if(!mobileNavOpen){
+        hideMobileDiv.style.display = 'flex';
+        mobileNavOpen = true;
+        console.log('I ran to display the flex')
+    } else {
+        hideMobileDiv.style.display = 'none';
+        mobileNavOpen = false;
+        console.log('I ran to display none')
+    }
+})
 
 const gameArea = document.querySelector("#game-area");
 const gameText = document.querySelector("#game-text");
 
 const userTextInput = document.querySelector("#user-text-input");
-const countdownMessage = document.querySelector("#countdown-msg");
-const timerText = document.querySelector("#timer");
+const countdownMessage = document.querySelector(".countdown-msg");
 
 const SPACE_BAR_KEY = " ";
 

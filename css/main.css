@@ -51,15 +51,71 @@ span.promptLeftSpan {
     color:white;
 }
 
+h2{
+    padding:0px;
+    margin:0px;
+}
+
 body {
-    width:960px;
+    width:100%;
     background-color: #0D0630;
     color: #fff;
     margin: auto;
 }
 
-#timer {
-    padding-bottom: 20px;
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: #08041c;
+    border-bottom: 2px solid #283e58;
+    margin-bottom: 25px;
+}
+
+footer{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+}
+
+ul li{
+    display: inline-flex;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    font-weight: 800;
+    padding:0px 15px 0px 0px;
+}
+
+ul li:last-child{
+    padding:0px;
+}
+
+.countdown-msg{
+    background: #375f6f;
+    margin:0px 25px 25px 25px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.racer-buttons{
+    width: 100%;
+    background: #b4eaff;
+    padding: 25px;
+    margin-top: 15px;
+}
+
+button#mainMenu-btn{
+    background-color: #ee2f2f;
+    border: 2px solid #790c0c;
+}
+
+button{
+    background: #333131;
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
 }
 
 #logo {
@@ -68,8 +124,16 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
+}
+
+.mainViewPort{
+    width: 960px;
+    border-radius: 15px;
+    align-self: center;
+    background: #7bd2f3;
+    box-sizing: border-box;
+    padding: 25px;
 }
 
 #game-word {
@@ -88,6 +152,8 @@ section#game-area {
 }
 
 #game-text {
+    min-height: 150px;
+    align-content: center;
     font-size:1.5em;
     padding:25px;
     background-color: #0B1724;
@@ -97,10 +163,60 @@ input[type="text"] {
     margin-top:15px;
     padding: 15px;
     font-size: 1.5em;
-    width: 85%;
+    width: 96%;
 }
 
 footer {
     text-align:center;
     padding-top:25px;
 }
+
+.mobile-button{
+    cursor: pointer;
+    display: none;
+}
+
+.hide-mobile{
+
+}
+
+a:link{color:#fff;text-decoration: none;}
+a:visited{color:#fff;}
+a:hover{color:#4ebbfa;}
+a:active{color:#fff;}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .mainViewPort{
+        width: 100%;
+        padding: 0px;
+        border-radius: 0;
+    }
+    #logo{
+        padding:5px;
+    }
+    .mobile-button{
+        display: block;
+    }
+    .hide-mobile{
+        display: none;
+        position: absolute;
+        background: #041b33;
+        right: 5px;
+        padding: 15px;
+        box-shadow: 5px 0px #7bd2f3;
+        border-left: 2px solid #016e97;
+        border-right: 2px solid #016e97;
+        flex-flow: column;
+    }
+    input[type="text"] {
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .racer-buttons{
+        box-sizing: border-box;
+    }
+    .countdown-msg{
+        margin: 25px;
+    }
+  }
