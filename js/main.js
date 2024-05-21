@@ -144,24 +144,36 @@ function handleInput(e){
    }
 
     //Prevent user from typing so many keys
-   if(key != "Backspace" && userInputBox.value.length == 13){
+   if(key != "Backspace" && userInputBox.value.length == 16){
       e.preventDefault();
       return;
    }
       //DELETEING KEYS START
       if(key == "Backspace"){
-        console.log('Previous WORD TO TYPE IS: '+previousWordToType())
         //////INCORRECT KEYS FOUND
 
         //FIX BUG FOR - If you type any other key (besides Enter or Space) after a completed word it will return null.
         //TO-DO
 
         if(incorrectKeys.innerHTML.length >= 1){
-            console.log('currentword to type'+currentWordToType())
+            console.log('currentword to type: '+currentWordToType())
+            console.log('previous to type: '+previousWordToType())
+            //if(currentIncorrectWordIndex >= 1 && currentCharIndex == 0 && ){
 
         if(incorrectKeys.innerHTML.length == 1){
+            if(correctKeys.innerHTML == previousWordToType()){
+                incorrectKeys.innerHTML = "";
+                console.log('1 MILLION')
+                currentIncorrectWordIndex--;
+                currentCharIndex = currentWordToType().length;
+                textPrompt.innerHTML = " "+nextWordToType().concat('', textPrompt.innerHTML);
+                nextKey.innerHTML = "";
+                keysLeft.innerHTML = keysLeftOfWord();
+                return;
+            } else {
             incorrectKeys.innerHTML = incorrectKeys.innerHTML.slice(1)
             console.log('ONLY 1 KEY WAS INCORRECT')
+            }
         }
         if(incorrectKeys.innerHTML.length > 1){
             console.log('BITCON 69 - incorrecykeys length:'+incorrectKeys.innerHTML.length);
@@ -169,11 +181,10 @@ function handleInput(e){
             console.log('MORE THEN 1 KEY WAS INCORRECT')
             console.log(currentIncorrectWordIndex);
         }
-        if(currentIncorrectWordIndex >= 1 && currentCharIndex == 0){
-            
-            console.log(currentIncorrectWordIndex)
-            console.log('there was a completed word met on index 0. WordIndex - 1 : '+currentWordToType())
+        if(currentIncorrectWordIndex >= 1 && currentCharIndex == 0 && correctKeys.innerHTML != previousWordToType()){
+            console.log('there was a completed word met on index 0');
             currentIncorrectWordIndex--;
+            console.log(currentIncorrectWordIndex)
             currentCharIndex = currentWordToType().length;
             incorrectKeys.innerHTML = incorrectKeys.innerHTML.slice(0, incorrectKeys.innerHTML.length - 1)
             textPrompt.innerHTML = " "+nextWordToType().concat('', textPrompt.innerHTML);
@@ -227,10 +238,12 @@ function handleInput(e){
     if(key == "Enter"){
         userInputBox.value += " ";
     }
-
-    incorrectKeys.innerHTML += nextCharToType();
     
-    currentCharIndex++;
+    if(nextCharToType() != undefined){
+        incorrectKeys.innerHTML += nextCharToType();
+        currentCharIndex++;   
+    }
+
     console.log('bitcoin 3031')
     console.log(currentWordIndex)
     console.log(currentIncorrectWordIndex)
@@ -243,7 +256,9 @@ function handleInput(e){
         nextKey.innerHTML = nextCharToType();
         keysLeft.innerHTML = keysLeftOfWord();
         console.log('NULL CHAR FOUND REST CHARINDEX TO 0')
-        console.log('CURRENT INCORRECT WORD INDEX :'+currentIncorrectWordIndex)
+        console.log('CurrentCharIndex:'+currentCharIndex);
+        console.log('Current IncorrectWord Index:'+currentIncorrectWordIndex);
+        console.log('Current CorrectWord Index:'+currentWordIndex);
         return;
     }
     
