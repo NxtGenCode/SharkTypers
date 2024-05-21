@@ -29,25 +29,23 @@ span.active-character::before {
 }
 
 span.completed-words {
-    text-decoration-color: green;
-    color: green;
+    color: rgb(12, 216, 12);
 }
 
-span.correct-characters {
-    text-decoration-color: green;
-    color: green;
+span.correct-keys {
+    color: rgb(8, 184, 8);
 }
 
-span.incorrect-characters {
+span.incorrect-keys {
     color: #803333;
     background-color: #f0a3a3;
 }
 
-span.remaining-characters {
+span.keys-left {
     color:white;
 }
 
-span.promptLeftSpan {
+span.text-prompt {
     color:white;
 }
 
@@ -73,6 +71,7 @@ header{
 }
 
 footer{
+    color:#146584;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5em;
 }
@@ -152,10 +151,12 @@ section#game-area {
 }
 
 #game-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:1.5em;
     min-height: 150px;
     align-content: center;
-    font-size:1.5em;
     padding:25px;
+    border-radius: 10px;
     background-color: #0B1724;
 }
 
@@ -176,14 +177,10 @@ footer {
     display: none;
 }
 
-.hide-mobile{
-
-}
-
-a:link{color:#fff;text-decoration: none;}
-a:visited{color:#fff;}
-a:hover{color:#4ebbfa;}
-a:active{color:#fff;}
+a:link{color:#00b8ff;text-decoration: none;}
+a:visited{color:#00b8ff;}
+a:hover{color:#6fd7ff;}
+a:active{color:#00b8ff;}
 
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
