@@ -28,6 +28,18 @@ span.active-character::before {
     }
 }
 
+#shark-area {
+    display:flex;
+    z-index: 0;
+    width:100%;
+    background-color: rgb(255, 0, 255);
+}
+
+#player_shark {
+    display:flex;
+    z-index: -1;
+}
+
 span.completed-words {
     color: rgb(12, 216, 12);
 }
