@@ -154,6 +154,7 @@ function handleInput(e) {
                 currentWordIndex--;
                 currentIncorrectWordIndex--;
                 completedRaceUI.style.display = 'block';
+                userInputBox.setAttribute('disabled', true);
                 return;
             }
             textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
