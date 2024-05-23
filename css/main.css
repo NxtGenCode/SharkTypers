@@ -43,6 +43,29 @@ span.active-character::before {
 
 #player_shark {
     position: absolute;
+    transition: left 1s ease;
+}
+
+#fish_1, #fish_2, #fish_3{
+    position: absolute;
+    transition: opacity 1s ease-out;
+}
+
+#award{
+    position: absolute;
+    right:0;
+}
+
+#fish_1{
+    left:150px;
+}
+
+#fish_2{
+    left:350px;
+}
+
+#fish_3{
+    left:750px;
 }
 
 .progress-line {
@@ -157,6 +180,19 @@ button{
     background: #7bd2f3;
     box-sizing: border-box;
     padding: 25px;
+}
+
+#completed-race-ui{
+    display: none;
+    background-color: #0b1724;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 40%;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid chartreuse;
 }
 
 #game-word {
