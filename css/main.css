@@ -29,27 +29,47 @@ span.active-character::before {
 }
 
 .player {
-    display:flex;
+    display: flex;
     position: relative;
-    width:100%;
-    height:50px;
+    width: 100%;
+    height: 50px;
+    align-items: center;
 }
 
 #shark-area {
-    display:flex;
-    flex-direction: column;
     width:100%;
     margin-bottom:25px;
 }
 
 #player_shark {
-    display: flex;
     position: absolute;
-    top: -32px;
-    z-index: 1;
+    transition: left 1s ease;
+}
+
+#fish_1, #fish_2, #fish_3{
+    position: absolute;
+    transition: opacity 1s ease-out;
+}
+
+#award{
+    position: absolute;
+    right:0;
+}
+
+#fish_1{
+    left:150px;
+}
+
+#fish_2{
+    left:350px;
+}
+
+#fish_3{
+    left:750px;
 }
 
 .progress-line {
+    border-radius: 5px;
     width:100%;
     height:5px;
     background-color:#00b8ff;
@@ -160,6 +180,19 @@ button{
     background: #7bd2f3;
     box-sizing: border-box;
     padding: 25px;
+}
+
+#completed-race-ui{
+    display: none;
+    background-color: #0b1724;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 40%;
+    padding: 20px;
+    text-align: center;
+    border: 2px solid chartreuse;
 }
 
 #game-word {

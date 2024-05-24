@@ -51,6 +51,14 @@ const SHARK_INCREMENT_POS = 2;
 const player = document.getElementById('player');
 const playerShark = document.getElementById('player_shark');
 
+const completedRaceUI = document.getElementById('completed-race-ui');
+
+const fish1 = document.getElementById('fish_1');
+const fish2 = document.getElementById('fish_2');
+const fish3 = document.getElementById('fish_3');
+
+let fishAte = 0;
+
 function preloadElements() {
     completedWords = document.createElement('span');
     completedWords.setAttribute('class', 'completed-words');
@@ -146,7 +154,10 @@ function handleInput(e) {
             currentIncorrectWordIndex++;
             lastCorrectKeyProgress = null;
             if (!currentWordToType()) {
-                alert("You have finished the race! Go back to the main menu to play again!");
+                currentWordIndex--;
+                currentIncorrectWordIndex--;
+                completedRaceUI.style.display = 'block';
+                userInputBox.setAttribute('disabled', true);
                 return;
             }
             textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
@@ -264,7 +275,7 @@ function handleInput(e) {
             userInputBox.value += " ";
         }
 
-        if (nextCharToType() != undefined) {
+        if (nextCharToType() != undefined && nextWordToType() != undefined) {
             incorrectKeys.innerHTML += nextCharToType();
             currentCharIndex++;
         }
@@ -272,8 +283,19 @@ function handleInput(e) {
         console.log('bitcoin 3031')
         console.log(currentWordIndex)
         console.log(currentIncorrectWordIndex)
+        console.log(nextWordToType())
+        console.log(currentCharIndex)
 
         if (!nextCharToType()) {
+            if(nextWordToType() === undefined){
+                incorrectKeys.innerHTML += "";
+                nextKey.innerHTML = nextCharToType();
+                incorrectKeys.innerHTML += nextCharToType();
+                keysLeft.innerHTML = keysLeftOfWord();
+                textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
+                console.log('doggggyy')
+                return;
+            }
             currentCharIndex = 0;
             currentIncorrectWordIndex++;
             textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
@@ -311,6 +333,19 @@ function handleInput(e) {
             console.log("Complete Percentage: "+percentageCompleted * 100+"%");
 
             playerShark.style.left = `${percentageCompleted * 100}` + "%";
+
+            if(playerShark.style.left == "118px"){
+                fish1.style.opacity = 0;
+                fishAte++;
+            }
+            if(playerShark.style.left == "318px"){
+                fish2.style.opacity = 0;
+                fishAte++;
+            }
+            if(playerShark.style.left == "718px"){
+                fish3.style.opacity = 0;
+                fishAte++;
+            }
         }
         
         if (!nextCharToType()) {
