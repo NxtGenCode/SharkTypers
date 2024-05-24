@@ -33,7 +33,7 @@ let currentIncorrectWordIndex;
 let completedWords, correctKeys, incorrectKeys, nextKey, keysLeft, textPrompt, textPromptNode;
 
 let TEXT_PROMPTS = [
-    "The Inca believed that if one did not give thanks and obedience to the gods, bad things would happen. The world of the Andes Mountains is full of ecological wonders - and ecological disasters such as earthquakes, severe storms, and volcanic activity.",
+    "I like to eat ice cream.",
     "Don't take anything personally - nothing others do is because of you. What others say and do is a projection of their own reality, their own dream. When you are immune to the opinions and actions of others, you won't be the victim of needless suffering.",
     "That fear had been inside him for many years, it had lived with him, it had been another shadow ever since the night he awoke, shaken by a bad dream, and realized that death was not only a permanent probability, as he has always believed, but an immediate reality.",
     "It is not hard to make money in the market. What is hard to avoid is the alluring temptation to throw your money away on short, get-rich-quick speculative binges. It is an obvious lesson, but one frequently ignored."
@@ -265,16 +265,22 @@ function handleInput(e) {
         //////NO MORE INCORRECT KEYS TO DELETE
         //DELETEING KEYS END
     }
-
     //> INCORRECT KEY INPUT <
     if (key != "Backspace" && key != nextCharToType() || key != "Backspace" && incorrectKeys.innerHTML.length >= 1) {
         if (key == "Enter") {
             userInputBox.value += " ";
         }
 
-        if (nextCharToType() != undefined && nextWordToType() != undefined) {
+        if (nextCharToType() != undefined) {
             incorrectKeys.innerHTML += nextCharToType();
             currentCharIndex++;
+        }
+
+        //This fixes the bug where if a user typed a incorrect key on the last letter of the last word of prompt would give error. works for now.
+        if (!nextCharToType() && nextWordToType() === undefined) {
+            userInputBox.setAttribute('maxlength', `${currentWordToType().length}`);
+            nextKey.innerHTML = "";
+            return;
         }
 
         console.log('bitcoin 3031')
@@ -284,15 +290,6 @@ function handleInput(e) {
         console.log(currentCharIndex)
 
         if (!nextCharToType()) {
-            if(nextWordToType() === undefined){
-                incorrectKeys.innerHTML += "";
-                nextKey.innerHTML = nextCharToType();
-                incorrectKeys.innerHTML += nextCharToType();
-                keysLeft.innerHTML = keysLeftOfWord();
-                textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
-                console.log('doggggyy')
-                return;
-            }
             currentCharIndex = 0;
             currentIncorrectWordIndex++;
             textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
