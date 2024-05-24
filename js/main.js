@@ -55,7 +55,10 @@ function preloadElements() {
     completedWords = document.createElement('span');
     completedWords.setAttribute('class', 'completed-words');
 
-    //currentProgress = (currentWordObj.length / completedWords.innerText.length);
+    console.log("currentWordObj.length: "+currentWordObj.length);
+    console.log("completedWords.innerText.length: "+completedWords.innerText.length);
+    currentProgress = (completedWords.innerText.length / currentWordObj.length);
+    console.log("currentProgress: "+currentProgress+"%");
 
     correctKeys = document.createElement('span');
     correctKeys.setAttribute('class', 'correct-keys');
@@ -299,8 +302,15 @@ function handleInput(e) {
         keysLeft.innerHTML = keysLeftOfWord();
         
         if (lastCorrectKeyProgress < currentCharIndex) {
-            sharkCounter += SHARK_INCREMENT_POS;
-            playerShark.style.left = `${sharkCounter}` + "px";
+            //currentProgress = (completedWords.innerText.length / currentWordObj.length);
+            sharkCounter += SHARK_INCREMENT_POS; // (100 - percentage )
+            //console.log("Length of prompt: "+selectedPrompt.length);
+            //console.log("completedWords + correctKeys length: "+(correctKeys.innerText.length + completedWords.innerText.length));
+
+            let percentageCompleted = Math.fround((correctKeys.innerText.length + completedWords.innerText.length) / selectedPrompt.length).toFixed(2);
+            console.log("Complete Percentage: "+percentageCompleted * 100+"%");
+
+            playerShark.style.left = `${percentageCompleted * 100}` + "%";
         }
         
         if (!nextCharToType()) {
