@@ -331,15 +331,15 @@ function handleInput(e) {
 
             playerShark.style.left = `${percentageCompleted * 100}` + "%";
 
-            if(playerShark.style.left == "118px"){
+            if(playerShark.style.left == "10%"){
                 fish1.style.opacity = 0;
                 fishAte++;
             }
-            if(playerShark.style.left == "318px"){
+            if(playerShark.style.left == "36%"){
                 fish2.style.opacity = 0;
                 fishAte++;
             }
-            if(playerShark.style.left == "718px"){
+            if(playerShark.style.left == "79%"){
                 fish3.style.opacity = 0;
                 fishAte++;
             }
