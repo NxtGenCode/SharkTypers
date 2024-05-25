@@ -53,11 +53,28 @@ const playerShark = document.getElementById('player_shark');
 
 const completedRaceUI = document.getElementById('completed-race-ui');
 
+const scoreUI = document.querySelector('#score');
+const timeToCompleteUI = document.querySelector('#time_to_complete');
+const wordsPerMinuteUI = document.querySelector('#words_per_minute');
+const typingAccuracyUI = document.querySelector('#typing_accuracy');
+const fishCollectedUI = document.querySelector('#fish_collected');
+
 const fish1 = document.getElementById('fish_1');
 const fish2 = document.getElementById('fish_2');
 const fish3 = document.getElementById('fish_3');
 
-let fishAte = 0;
+let fish1Collected = false, fish2Collected = false, fish3Collected = false;
+
+let score = 0;
+let fishCollected = 0;
+
+let startTime = null;
+let totalTimeToComplete = 0;
+let wordsPerMinute = 0;
+
+// To Calculate Accuracy
+let totalKeysPressed = 0;
+let correctKeysPressed = 0;
 
 function preloadElements() {
     completedWords = document.createElement('span');
@@ -133,9 +150,18 @@ function updatedTextPrompt() {
     return textPrompt.innerText.slice(currentWordToType().length);
 }
 
-let sharkCounter = 0;
+function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
+
 function handleInput(e) {
     const key = e.key;
+
+    if (startTime == null) {
+        startTime = performance.now();
+    }
 
     if (key == "CapsLock" || key == "Shift") {
         return;
@@ -153,18 +179,48 @@ function handleInput(e) {
             currentWordIndex++;
             currentIncorrectWordIndex++;
             lastCorrectKeyProgress = null;
+
             if (!currentWordToType()) {
                 currentWordIndex--;
                 currentIncorrectWordIndex--;
                 completedRaceUI.style.display = 'block';
                 userInputBox.setAttribute('disabled', true);
+
+                console.log("correctKeysPressed:"+correctKeysPressed);
+                console.log("totalKeysPressed:"+totalKeysPressed);
+
+                let typingAccuracy = (correctKeysPressed / totalKeysPressed) * 100;
+                typingAccuracyUI.innerText = Math.floor(typingAccuracy)+'%';
+
+                score = typingAccuracy * 3;
+                scoreUI.innerText = Math.floor(score);
+
+                totalTimeToComplete = (performance.now() - startTime);
+                timeToCompleteUI.innerText = millisToMinutesAndSeconds(totalTimeToComplete);
+                totalTimeToComplete /= 1000;
+
+
+                let timeDiffInMinutes = totalTimeToComplete / 60;
+                let wordCount = currentWordObj.length;
+                let wpm = wordCount / timeDiffInMinutes;
+                wordsPerMinute = wpm;
+                wordsPerMinuteUI.innerText = Math.round(wordsPerMinute) + " WPM";
+
+                fishCollectedUI.innerText = fishCollected;
+                
+                startTime = null;
+                totalTimeToComplete = 0;
+                wordsPerMinute = 0;
+                totalKeysPressed = 0;
+                correctKeysPressed = 0;
                 return;
             }
+
             textPrompt.innerHTML = textPrompt.innerHTML.slice(currentWordToType().length + 1);
             nextKey.innerHTML = nextCharToType();
             keysLeft.innerHTML = keysLeftOfWord();
-            console.log('next word..?: ' + currentWordToType())
-            console.log('next char index..?: ' + currentCharIndex)
+            console.log('next word..?: ' + currentWordToType());
+            console.log('next char index..?: ' + currentCharIndex);
             clearInputBox();
             return;
         }
@@ -305,7 +361,7 @@ function handleInput(e) {
             console.log('Current CorrectWord Index:' + currentWordIndex);
             return;
         }
-
+        totalKeysPressed += 1;
         keysLeft.innerHTML = keysLeftOfWord();
         nextKey.innerHTML = nextCharToType();
         console.log('INCORRECT KEY TYPED')
@@ -319,29 +375,30 @@ function handleInput(e) {
         correctKeys.innerHTML += nextCharToType();
         currentCharIndex++;
         keysLeft.innerHTML = keysLeftOfWord();
-        
+        correctKeysPressed += 1;
+        totalKeysPressed += 1;
+
         if (lastCorrectKeyProgress < currentCharIndex) {
-            //currentProgress = (completedWords.innerText.length / currentWordObj.length);
-            sharkCounter += SHARK_INCREMENT_POS; // (100 - percentage )
-            //console.log("Length of prompt: "+selectedPrompt.length);
-            //console.log("completedWords + correctKeys length: "+(correctKeys.innerText.length + completedWords.innerText.length));
 
             let percentageCompleted = Math.fround((correctKeys.innerText.length + completedWords.innerText.length) / selectedPrompt.length).toFixed(2);
             console.log("Complete Percentage: "+percentageCompleted * 100+"%");
 
             playerShark.style.left = `${percentageCompleted * 100}` + "%";
 
-            if(playerShark.style.left == "10%"){
+            if(playerShark.style.left == "10%" && !fish1Collected){
                 fish1.style.opacity = 0;
-                fishAte++;
+                fishCollected++;
+                fish1Collected = true;
             }
-            if(playerShark.style.left == "36%"){
+            if(playerShark.style.left == "36%" && !fish2Collected){
                 fish2.style.opacity = 0;
-                fishAte++;
+                fishCollected++;
+                fish2Collected = true;
             }
-            if(playerShark.style.left == "79%"){
+            if(playerShark.style.left == "79%" && !fish3Collected){
                 fish3.style.opacity = 0;
-                fishAte++;
+                fishCollected++;
+                fish3Collected = true;
             }
         }
         
