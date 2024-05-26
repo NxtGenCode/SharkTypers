@@ -248,6 +248,7 @@ function handleInput(e) {
             if (incorrectKeys.innerHTML.length == 1) {
                 if (correctKeys.innerHTML == previousWordToType()) {
                     incorrectKeys.innerHTML = "";
+                    userInputBox.style.backgroundColor = "#white";
                     console.log('1 MILLION')
                     currentIncorrectWordIndex--;
                     currentCharIndex = currentWordToType().length;
@@ -368,7 +369,9 @@ function handleInput(e) {
             incorrectKeys.innerHTML += " ";
             nextKey.innerHTML = nextCharToType();
             keysLeft.innerHTML = keysLeftOfWord();
+
             userInputBox.style.backgroundColor = "#ed5555";
+            
             console.log('NULL CHAR FOUND REST CHARINDEX TO 0')
             console.log('CurrentCharIndex:' + currentCharIndex);
             console.log('Current IncorrectWord Index:' + currentIncorrectWordIndex);
@@ -405,19 +408,19 @@ function handleInput(e) {
                 fish1.style.opacity = 0;
                 fishCollected++;
                 fish1Collected = true;
-                new Audio('./audio/collect_fish_sound.wav').play();
+                new Audio('./audio/collect_fish_sound_1.wav').play();
             }
             if(playerShark.style.left == "36%" && !fish2Collected){
                 fish2.style.opacity = 0;
                 fishCollected++;
                 fish2Collected = true;
-                new Audio('./audio/collect_fish_sound.wav').play();
+                new Audio('./audio/collect_fish_sound_2.wav').play();
             }
             if(playerShark.style.left == "79%" && !fish3Collected){
                 fish3.style.opacity = 0;
                 fishCollected++;
                 fish3Collected = true;
-                new Audio('./audio/collect_fish_sound.wav').play();
+                new Audio('./audio/collect_fish_sound_3.wav').play();
             }
         }
         
@@ -447,8 +450,16 @@ function start() {
 
     let gameMusic = new Audio('./audio/underwater_ambience.wav');
     document.body.addEventListener("mousemove", function () {
-        gameMusic.loop = true;
-        gameMusic.play();
+        if (gameMusic.paused == true) {
+            gameMusic.loop = true;
+            gameMusic.play();
+        }
+    });
+    document.body.addEventListener("click", function () {
+        if (gameMusic.paused == true) {
+            gameMusic.loop = true;
+            gameMusic.play();
+        }
     });
 }
 
