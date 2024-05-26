@@ -184,15 +184,15 @@ button{
 
 #completed-race-ui{
     display: none;
-    background-color: #08331f;
+    background-color: #1e1e1e;
     position: fixed;
-    top: 25%;
+    top: 20%;
     left: 50%;
     transform: translate(-50%, 0);
     width: 40%;
     padding: 25px;
     text-align: center;
-    border: 2px solid #438600;
+    border: 2px solid #000;
     border-radius: 5px;
     box-shadow: 0px 0px 5px #000;
 }
@@ -205,8 +205,9 @@ ul.stats{
     display: flex;
     flex-flow: column wrap;
     padding: 25px;
-    background: #051e12;
+    background: #0b0b0b;
     border-radius: 1em;
+    border: 1px solid black;
     margin: 25px;
 }
 
