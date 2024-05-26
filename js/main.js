@@ -180,7 +180,8 @@ function handleInput(e) {
             currentWordIndex++;
             currentIncorrectWordIndex++;
             lastCorrectKeyProgress = null;
-
+            userInputBox.style.backgroundColor = "#FFFFFF";
+            
             if (!currentWordToType()) {
                 currentWordIndex--;
                 currentIncorrectWordIndex--;
@@ -248,7 +249,7 @@ function handleInput(e) {
             if (incorrectKeys.innerHTML.length == 1) {
                 if (correctKeys.innerHTML == previousWordToType()) {
                     incorrectKeys.innerHTML = "";
-                    userInputBox.style.backgroundColor = "#white";
+                    userInputBox.style.backgroundColor = "#FFFFFF";
                     console.log('1 MILLION')
                     currentIncorrectWordIndex--;
                     currentCharIndex = currentWordToType().length;
@@ -286,19 +287,14 @@ function handleInput(e) {
             console.log(currentIncorrectWordIndex);
             console.log('NEXT WORD TO WORK ON: ' + currentWordToType());
             console.log('current incorrect word index: ' + currentIncorrectWordIndex);
-
             console.log("incorrectKeys.innerText.length: "+incorrectKeys.innerText.length);
-            if (incorrectKeys.innerText.length <= 0) {
-                userInputBox.style.backgroundColor = "white";
-                console.log("hi? 1");
-            } else {
-                userInputBox.style.backgroundColor = "#ed5555";
-                console.log("hi? 2");
+            
+            if (incorrectKeys.innerHTML.length <= 0) {
+                userInputBox.style.backgroundColor = "#FFFFFF";
             }
             return;
         } else {
-            userInputBox.style.backgroundColor = "white";
-            console.log("hi?3 ");
+            userInputBox.style.backgroundColor = "#FFFFFF";
         }
         //////NO MORE INCORRECT KEYS TO DELETE
 
