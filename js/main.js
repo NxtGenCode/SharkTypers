@@ -53,6 +53,7 @@ const playerShark = document.getElementById('player_shark');
 
 const completedRaceUI = document.getElementById('completed-race-ui');
 
+const playerDisplayNameUI = document.querySelector('#player_display_name');
 const scoreUI = document.querySelector('#score');
 const timeToCompleteUI = document.querySelector('#time_to_complete');
 const wordsPerMinuteUI = document.querySelector('#words_per_minute');
@@ -401,6 +402,7 @@ function handleInput(e) {
             let percentageCompleted = Math.fround((correctKeys.innerText.length + completedWords.innerText.length) / selectedPrompt.length).toFixed(2);
             console.log("Complete Percentage: "+percentageCompleted * 100+"%");
 
+            playerDisplayNameUI.style.left = `${percentageCompleted * 100}` + "%";
             playerShark.style.left = `${percentageCompleted * 100}` + "%";
 
             if(playerShark.style.left == "10%" && !fish1Collected){

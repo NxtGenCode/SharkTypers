@@ -3,6 +3,15 @@
     margin:0px;
 }
 
+p#player_display_name {
+    position: absolute;
+    left: 0%;
+    top: -16px;
+    color: white;
+    background-color: #009bd7;
+    transition:all 1s linear;
+}
+
 span.active-character::before {
     font-size: 1em;
     position: fixed;
