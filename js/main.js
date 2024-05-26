@@ -341,7 +341,7 @@ function handleInput(e) {
             userInputBox.value += " ";
         }
 
-        new Audio('./audio/error_sound.mp3').play();
+        new Audio('./audio/error_sound.wav').play();
 
         if (nextCharToType() != undefined) {
             incorrectKeys.innerHTML += nextCharToType();
