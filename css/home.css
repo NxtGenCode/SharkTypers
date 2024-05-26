@@ -1,0 +1,22 @@
+main#home{
+    display: flex;
+    width:960px;
+    flex-flow:column wrap;
+    justify-content: center;
+    margin: auto;
+}
+
+.welcome-block{
+    display: flex;
+    flex-direction: row;
+    background-color: #08041c;
+    border:2px solid #000;
+}
+
+.shark-preview{
+    flex:1;
+}
+
+.welcome-buttons{
+    width:320px;
+}

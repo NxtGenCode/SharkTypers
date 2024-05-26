@@ -22,13 +22,23 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#">Updates</a></li>
                         <li><a href="#">HighScores</a></li>
-                        <li><a href="#">Create An Account</a></li>
+                        <li><a href="#">Your Profile</a></li>
                         </div>
                     </ul>
                 </div>
             </header>
             <div class="mainViewPort">
             <div id="type-racer-box">
+                <div id="shark-area">
+                    <div class="player">
+                        <div class="progress-line"></div>
+                        <img id="player_shark" src="./img/shark.png" width="64" height="64" alt="your shark"/>
+                        <img id="fish_1" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="fish_2" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="fish_3" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="award" src="./img/medal.png" width="64" height="64" alt="A Medal For The Finish"/>
+                    </div>
+                </div>
                 <div id="game-text">
                     <!--Game Spans Load Here-->
                 </div>
@@ -38,6 +48,18 @@
                 </div>
             </div>
             <footer>© SharkTypers 2024</footer>
+        </div>
+        <div id="completed-race-ui">
+            <h1>🏆 You Finished The Race! 🏆</h1>
+            <b>You Placed #1!</b>
+                <ul class="stats">
+                    <li>Score: <span id="score" style="color:gold; padding-left:5px;">3114</span></li>
+                    <li>Accuracy:<span id="typing_accuracy" style="color:gold; padding-left:5px;">98%</span></li>
+                    <li>Time: <span id="time_to_complete" style="color:gold; padding-left:5px;">2:15</span></li>
+                    <li>Speed:<span id="words_per_minute" style="color:gold; padding-left:5px;">98 WPM</span></li>
+                    <li>Fish: <span id="fish_collected" style="color:orange; padding-left:5px;">99</span></li>
+                </ul>
+            <a href="index.html"><button type="button">Continue</button></a> <b>OR</b> <a href="index.html"><button type="button" style="background: green;">Play Again</button></a>
         </div>
         <script src="./js/main.js"></script>
     </body>

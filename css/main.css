@@ -28,6 +28,53 @@ span.active-character::before {
     }
 }
 
+.player {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+}
+
+#shark-area {
+    width:100%;
+    margin-bottom:25px;
+}
+
+#player_shark {
+    position: absolute;
+    transition: left 1s ease;
+}
+
+#fish_1, #fish_2, #fish_3{
+    position: absolute;
+    transition: opacity 1s ease-out;
+}
+
+#award{
+    position: absolute;
+    left:100%;
+}
+
+#fish_1{
+    left:150px;
+}
+
+#fish_2{
+    left:350px;
+}
+
+#fish_3{
+    left:750px;
+}
+
+.progress-line {
+    border-radius: 5px;
+    width:100%;
+    height:5px;
+    background-color:#00b8ff;
+}
+
 span.completed-words {
     color: rgb(12, 216, 12);
 }
@@ -135,8 +182,37 @@ button{
     padding: 25px;
 }
 
+#completed-race-ui{
+    display: none;
+    background-color: #1e1e1e;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 40%;
+    padding: 25px;
+    text-align: center;
+    border: 2px solid #000;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #000;
+}
+
 #game-word {
     color:green;
+}
+
+ul.stats{
+    display: flex;
+    flex-flow: column wrap;
+    padding: 25px;
+    background: #0b0b0b;
+    border-radius: 1em;
+    border: 1px solid black;
+    margin: 25px;
+}
+
+ul.stats li{
+    font-weight: normal;
 }
 
 section#game-area {
@@ -154,9 +230,11 @@ section#game-area {
     font-family: Arial, Helvetica, sans-serif;
     font-size:1.5em;
     min-height: 150px;
+    min-width: 95%;
     align-content: center;
+    text-wrap: balance;
+    text-align: center;
     padding:25px;
-    border-radius: 10px;
     background-color: #0B1724;
 }
 
@@ -164,7 +242,7 @@ input[type="text"] {
     margin-top:15px;
     padding: 15px;
     font-size: 1.5em;
-    width: 96%;
+    width: 95%;
 }
 
 footer {
