@@ -447,6 +447,7 @@ function start() {
 
     let gameMusic = new Audio('./audio/underwater_ambience.wav');
     document.body.addEventListener("mousemove", function () {
+        gameMusic.loop = true;
         gameMusic.play();
     });
 }
