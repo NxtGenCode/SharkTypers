@@ -189,6 +189,8 @@ function handleInput(e) {
                 console.log("correctKeysPressed:"+correctKeysPressed);
                 console.log("totalKeysPressed:"+totalKeysPressed);
 
+                new Audio('./audio/game_victory_sound.wav').play();
+
                 let typingAccuracy = (correctKeysPressed / totalKeysPressed) * 100;
                 typingAccuracyUI.innerText = Math.floor(typingAccuracy)+'%';
 
@@ -234,7 +236,6 @@ function handleInput(e) {
     //DELETEING KEYS START
     if (key == "Backspace") {
         //////INCORRECT KEYS FOUND
-
         //FIX BUG FOR - If you type any other key (besides Enter or Space) after a completed word it will return null.
         //TO-DO
 
@@ -242,7 +243,7 @@ function handleInput(e) {
             console.log('currentword to type: ' + currentWordToType())
             console.log('previous to type: ' + previousWordToType())
             //if(currentIncorrectWordIndex >= 1 && currentCharIndex == 0 && ){
-
+                
             if (incorrectKeys.innerHTML.length == 1) {
                 if (correctKeys.innerHTML == previousWordToType()) {
                     incorrectKeys.innerHTML = "";
@@ -283,7 +284,16 @@ function handleInput(e) {
             console.log(currentIncorrectWordIndex);
             console.log('NEXT WORD TO WORK ON: ' + currentWordToType());
             console.log('current incorrect word index: ' + currentIncorrectWordIndex);
+
+            console.log("incorrectKeys.innerText.length: "+incorrectKeys.innerText.length);
+            if (incorrectKeys.innerText.length <= 0) {
+                userInputBox.style.backgroundColor = "white";
+            } else {
+                userInputBox.style.backgroundColor = "#ed5555";
+            }
             return;
+        } else {
+            userInputBox.style.backgroundColor = "white";
         }
         //////NO MORE INCORRECT KEYS TO DELETE
 
@@ -361,6 +371,8 @@ function handleInput(e) {
             console.log('Current CorrectWord Index:' + currentWordIndex);
             return;
         }
+        //background-color: #ed5555;
+        userInputBox.style.backgroundColor = "#ed5555";
         totalKeysPressed += 1;
         keysLeft.innerHTML = keysLeftOfWord();
         nextKey.innerHTML = nextCharToType();
@@ -389,16 +401,19 @@ function handleInput(e) {
                 fish1.style.opacity = 0;
                 fishCollected++;
                 fish1Collected = true;
+                new Audio('./audio/collect_fish_sound.wav').play();
             }
             if(playerShark.style.left == "36%" && !fish2Collected){
                 fish2.style.opacity = 0;
                 fishCollected++;
                 fish2Collected = true;
+                new Audio('./audio/collect_fish_sound.wav').play();
             }
             if(playerShark.style.left == "79%" && !fish3Collected){
                 fish3.style.opacity = 0;
                 fishCollected++;
                 fish3Collected = true;
+                new Audio('./audio/collect_fish_sound.wav').play();
             }
         }
         
