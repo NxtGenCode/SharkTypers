@@ -112,6 +112,7 @@ function preloadElements() {
     gameText.prepend(incorrectKeys);
     gameText.prepend(correctKeys);
     gameText.prepend(completedWords);
+    
 }
 
 function currentWordToType() {
@@ -365,6 +366,7 @@ function handleInput(e) {
             incorrectKeys.innerHTML += " ";
             nextKey.innerHTML = nextCharToType();
             keysLeft.innerHTML = keysLeftOfWord();
+            userInputBox.style.backgroundColor = "#ed5555";
             console.log('NULL CHAR FOUND REST CHARINDEX TO 0')
             console.log('CurrentCharIndex:' + currentCharIndex);
             console.log('Current IncorrectWord Index:' + currentIncorrectWordIndex);
@@ -440,6 +442,11 @@ function start() {
     userInputBox.addEventListener('keydown', handleInput);
     console.log('Game Started.')
     console.log('nextWord: ' + currentWordToType());
+
+    let gameMusic = new Audio('./audio/underwater_ambience.wav');
+    document.body.addEventListener("mousemove", function () {
+        gameMusic.play();
+    });
 }
 
 start();
