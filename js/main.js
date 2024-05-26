@@ -290,12 +290,15 @@ function handleInput(e) {
             console.log("incorrectKeys.innerText.length: "+incorrectKeys.innerText.length);
             if (incorrectKeys.innerText.length <= 0) {
                 userInputBox.style.backgroundColor = "white";
+                console.log("hi? 1");
             } else {
                 userInputBox.style.backgroundColor = "#ed5555";
+                console.log("hi? 2");
             }
             return;
         } else {
             userInputBox.style.backgroundColor = "white";
+            console.log("hi?3 ");
         }
         //////NO MORE INCORRECT KEYS TO DELETE
 
@@ -371,14 +374,14 @@ function handleInput(e) {
             keysLeft.innerHTML = keysLeftOfWord();
 
             userInputBox.style.backgroundColor = "#ed5555";
-            
+
             console.log('NULL CHAR FOUND REST CHARINDEX TO 0')
             console.log('CurrentCharIndex:' + currentCharIndex);
             console.log('Current IncorrectWord Index:' + currentIncorrectWordIndex);
             console.log('Current CorrectWord Index:' + currentWordIndex);
             return;
         }
-        //background-color: #ed5555;
+
         userInputBox.style.backgroundColor = "#ed5555";
         totalKeysPressed += 1;
         keysLeft.innerHTML = keysLeftOfWord();
