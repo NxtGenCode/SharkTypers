@@ -84,6 +84,10 @@ span.active-character::before {
     background-color:#00b8ff;
 }
 
+span.completed-words, span.correct-keys, span.incorrect-keys, span.keys-left, span.text-prompt{
+    white-space: break-spaces;
+}
+
 span.completed-words {
     color: rgb(0 184 255);
 }
@@ -106,8 +110,7 @@ span.text-prompt {
 }
 
 h2{
-    padding:0px;
-    margin:0px;
+    font-size:1em;
 }
 
 body {
@@ -119,11 +122,42 @@ body {
 
 header{
     display: flex;
+    width:100%;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     background: #08041c;
     border-bottom: 2px solid #283e58;
     margin-bottom: 25px;
+}
+
+.header-left{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header-right{
+    padding-right:25px;
+}
+
+.user-nav-ui{
+    display: flex;
+    flex-flow:row nowrap;
+    align-items: center;
+}
+
+.user-avatar{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0e87eb;
+    border:2px solid #fff;
+    width:48px;
+    height:48px;
+    padding: 25px;
+    border-radius: 1em;
+    margin-right:5px;
 }
 
 footer{
@@ -135,13 +169,8 @@ footer{
 ul li{
     display: inline-flex;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.5em;
     font-weight: 800;
     padding:0px 15px 0px 0px;
-}
-
-ul li:last-child{
-    padding:0px;
 }
 
 .countdown-msg{
