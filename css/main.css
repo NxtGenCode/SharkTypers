@@ -28,7 +28,7 @@ span.active-character::before {
     animation-fill-mode: none;
     animation-play-state: running;
     animation-name: blink;
-    color:#00f1ff;
+    color:#00b8ff;
 }
 
 @keyframes blink {
@@ -85,11 +85,11 @@ span.active-character::before {
 }
 
 span.completed-words {
-    color: rgb(12, 216, 12);
+    color: rgb(0 184 255);
 }
 
 span.correct-keys {
-    color: rgb(8, 184, 8);
+    color: rgb(0 149 209);
 }
 
 span.incorrect-keys {
