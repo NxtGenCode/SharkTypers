@@ -3,6 +3,15 @@
     margin:0px;
 }
 
+@keyframes shark_rotation {
+    from {
+      transform: rotate(-5deg);
+    }
+    to {
+      transform: rotate(10deg);
+    }
+}
+
 p#player_display_name {
     position: absolute;
     left: 0%;
@@ -52,7 +61,8 @@ span.active-character::before {
 
 #player_shark {
     position: absolute;
-    transition: left 1s ease;
+    transition:all 1s linear;
+    animation: shark_rotation 1.5s infinite alternate;
 }
 
 #fish_1, #fish_2, #fish_3{
