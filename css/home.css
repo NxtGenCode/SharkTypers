@@ -79,7 +79,7 @@ h2{
     display: inline-flex;
 }
 
-.shark-preview{
+.shark-preview-area{
     display: flex;
     flex: 1;
     flex-direction: row;

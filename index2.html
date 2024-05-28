@@ -41,22 +41,22 @@
             <main>
             <section id="home">
                 <div class="welcome-block">
-                    <div class="shark-preview">
-                        <div class="shark">
-                        <img src="./img/shark.png" width="250" height="250" alt="Shark Preview"/>
+                    <div class="shark-preview-area">
+                        <div class="shark-preview">
+                        <img id="shark-preview" src="./img/sharks/default-shark.png" width="250" height="250" alt="Shark Preview"/>
                         </div>
                         <div class="shark-color-previews">
                             <div class="f-column">
-                                <div style="background-color: red;" class="color-block"></div>
-                                <div style="background-color: yellow;" class="color-block"></div>
-                                <div style="background-color: green;" class="color-block"></div>
-                                <div style="background-color: blue;" class="color-block"></div>
+                                <div id="red" style="background-color: red;" class="color-block"></div>
+                                <div id="yellow" style="background-color: yellow;" class="color-block"></div>
+                                <div id="green" style="background-color: green;" class="color-block"></div>
+                                <div id="blue" style="background-color: blue;" class="color-block"></div>
                             </div>
                             <div class="f-column">
-                                <div style="background-color: purple;" class="color-block"></div>
-                                <div style="background-color: orange;" class="color-block"></div>
-                                <div style="background-color: black;" class="color-block"></div>
-                                <div style="background-color: pink;" class="color-block"></div>
+                                <div id="white" style="background-color: white;" class="color-block"></div>
+                                <div id="default" style="background-color: grey;" class="color-block"></div>
+                                <div id="black" style="background-color: black;" class="color-block"></div>
+                                <div id="pink" style="background-color: pink;" class="color-block"></div>
                             </div>
                         </div>
                     </div>
@@ -86,5 +86,6 @@
             </main>
         </div>
         <script src="./js/main.js"></script>
+        <script src="./js/sharkPreview.js"></script>
     </body>
 </html>
