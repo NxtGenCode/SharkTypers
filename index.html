@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+        <link rel="stylesheet" href="./css/home.css">
         <link rel="stylesheet" href="./css/main.css">
     </head>
     <body>
@@ -21,6 +22,7 @@
                         <li class="mobile-button"><img src="./img/nav-menu.png" width="48" height="48" alt="Mobile Navigation"/></li>
                         <div class="hide-mobile">
                         <li><a href="index.html">Home</a></li>
+                        <li><a href="play.html">Play Now</a></li>
                         <li><a href="#">Updates</a></li>
                         <li><a href="#">HighScores</a></li>
                         <li><a href="#">Sign In</a></li>
@@ -37,41 +39,53 @@
                     </div>
                 </div>
             </header>
-            <div class="mainViewPort">
-            <div id="type-racer-box">
-                <div id="shark-area">
-                    <div class="player">
-                        <div class="progress-line"></div>
-                        <p id="player_display_name">ImpactHills</p>
-                        <img id="player_shark" src="./img/shark.png" width="64" height="64" alt="your shark"/>
-                        <img id="fish_1" src="./img/reef.png" width="64" height="64" alt="A fish"/>
-                        <img id="fish_2" src="./img/reef.png" width="64" height="64" alt="A fish"/>
-                        <img id="fish_3" src="./img/reef.png" width="64" height="64" alt="A fish"/>
-                        <img id="award" src="./img/medal.png" width="64" height="64" alt="A Medal For The Finish"/>
+            <main>
+            <section id="home">
+                <div class="welcome-block">
+                    <div class="shark-preview-area">
+                        <div class="shark-preview">
+                        <img id="shark-preview" src="./img/sharks/default-shark.png" width="250" height="250" alt="Shark Preview"/>
+                        </div>
+                        <div class="shark-color-previews">
+                            <div class="f-column">
+                                <div id="red" style="background-color: red;" class="color-block"></div>
+                                <div id="yellow" style="background-color: yellow;" class="color-block"></div>
+                                <div id="green" style="background-color: green;" class="color-block"></div>
+                                <div id="blue" style="background-color: blue;" class="color-block"></div>
+                            </div>
+                            <div class="f-column">
+                                <div id="white" style="background-color: white;" class="color-block"></div>
+                                <div id="default" style="background-color: grey;" class="color-block"></div>
+                                <div id="black" style="background-color: black;" class="color-block"></div>
+                                <div id="pink" style="background-color: pink;" class="color-block"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="welcome-buttons">
+                        <button id="play" type="button">PLAY</button>
+                        <button id="create" type="button">CREATE ACCOUNT</button>
                     </div>
                 </div>
-                <div id="game-text">
-                    <!--Game Spans Load Here-->
+            </section>
+            <section id="game-modes">
+                <div style="background-color: green;" id="school-mode" class="small-block">
+                    <h3>School Mode</h3>
+                    <p>Select grades from Pre-School all the way to college!</p>
                 </div>
-                <input id="user-input" type="text" placeholder="Enter Text Here" maxlength="16">
-                <div class="racer-buttons">
-                    <a href="index.html"><button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button></a>
+                <div style="background-color: red;" id="hardcore-mode" class="small-block">
+                    <h3>Hardcore Mode</h3>
+                    <p>In hardcore mode, make ONE mistake and it's all over!</p>
                 </div>
-            </div>
-            <footer>© SharkTypers 2024</footer>
+                <div style="background-color: #fff; color:#000;" id="picture-mode" class="small-block">
+                    <h3>Picture to Word Mode</h3>
+                    <p>Test yourself by typing the correct word for each picture!</p>
+                </div>
+            </section>
+            <section id="highscores">
+                <h1 class="title-header">SharkTypers HighScores!</h1>
+            </section>
+            </main>
         </div>
-        <div id="completed-race-ui">
-            <h1>🏆 You Finished The Race! 🏆</h1>
-            <b>You Placed #1!</b>
-                <ul class="stats">
-                    <li>Score: <span id="score" style="color:gold; padding-left:5px;">3114</span></li>
-                    <li>Accuracy:<span id="typing_accuracy" style="color:gold; padding-left:5px;">98%</span></li>
-                    <li>Time: <span id="time_to_complete" style="color:gold; padding-left:5px;">2:15</span></li>
-                    <li>Speed:<span id="words_per_minute" style="color:gold; padding-left:5px;">98 WPM</span></li>
-                    <li>Fish: <span id="fish_collected" style="color:orange; padding-left:5px;">99</span></li>
-                </ul>
-            <a href="index.html"><button type="button">Continue</button></a> <b>OR</b> <a href="index.html"><button type="button" style="background: green;">Play Again</button></a>
-        </div>
-        <script src="./js/main.js"></script>
+        <script src="./js/sharkPreview.js"></script>
     </body>
 </html>

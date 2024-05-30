@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>SharkTypers - Play & Type!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
+        <link rel="stylesheet" href="./css/main.css">
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div class="header-left">
+                <div id="logo">
+                    <a href="index.html">
+                        <img src="./img/logo.png" width="320" height="100%" alt="Shark Typers"/>
+                    </a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li class="mobile-button"><img src="./img/nav-menu.png" width="48" height="48" alt="Mobile Navigation"/></li>
+                        <div class="hide-mobile">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="play.html">Play Now</a></li>
+                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">HighScores</a></li>
+                        <li><a href="#">Sign In</a></li>
+                        </div>
+                    </ul>
+                </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-nav-ui">
+                        <div class="user-avatar">
+                            <img id="avatar" src="./img/default-avatar.png" width="32" height="32" alt="Your Avatar" title="View Profile"/>
+                        </div>
+                        <h2>Welcome Guest! Sign In to experience the full shark typer fun!</h2>
+                    </div>
+                </div>
+            </header>
+            <div class="mainViewPort">
+            <div id="type-racer-box">
+                <div id="shark-area">
+                    <div class="player">
+                        <div class="progress-line"></div>
+                        <p id="player_display_name">ImpactHills</p>
+                        <img id="player_shark" src="./img/shark.png" width="64" height="64" alt="your shark"/>
+                        <img id="fish_1" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="fish_2" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="fish_3" src="./img/reef.png" width="64" height="64" alt="A fish"/>
+                        <img id="award" src="./img/medal.png" width="64" height="64" alt="A Medal For The Finish"/>
+                    </div>
+                </div>
+                <div id="game-text">
+                    <!--Game Spans Load Here-->
+                </div>
+                <input id="user-input" type="text" placeholder="Enter Text Here" maxlength="16">
+                <div class="racer-buttons">
+                    <a href="index.html"><button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button></a>
+                </div>
+            </div>
+            <footer>© SharkTypers 2024</footer>
+        </div>
+        <div id="completed-race-ui">
+            <h1>🏆 You Finished The Race! 🏆</h1>
+            <b>You Placed #1!</b>
+                <ul class="stats">
+                    <li>Score: <span id="score" style="color:gold; padding-left:5px;">3114</span></li>
+                    <li>Accuracy:<span id="typing_accuracy" style="color:gold; padding-left:5px;">98%</span></li>
+                    <li>Time: <span id="time_to_complete" style="color:gold; padding-left:5px;">2:15</span></li>
+                    <li>Speed:<span id="words_per_minute" style="color:gold; padding-left:5px;">98 WPM</span></li>
+                    <li>Fish: <span id="fish_collected" style="color:orange; padding-left:5px;">99</span></li>
+                </ul>
+            <a href="index.html"><button type="button">Continue</button></a> <b>OR</b> <a href="index.html"><button type="button" style="background: green;">Play Again</button></a>
+        </div>
+        <script src="./js/main.js"></script>
+    </body>
+</html>
