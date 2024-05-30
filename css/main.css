@@ -12,6 +12,18 @@
     }
 }
 
+p#timerText {
+    position: relative;
+    font-family: cursive;
+    left: 45%;
+}
+
+div#timer-display {
+    width: 100%;
+    height: 20px;
+    text-align: center;
+}
+
 p#player_display_name {
     position: absolute;
     left: 0%;
