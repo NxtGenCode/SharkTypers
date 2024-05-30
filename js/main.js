@@ -59,6 +59,7 @@ const timeToCompleteUI = document.querySelector('#time_to_complete');
 const wordsPerMinuteUI = document.querySelector('#words_per_minute');
 const typingAccuracyUI = document.querySelector('#typing_accuracy');
 const fishCollectedUI = document.querySelector('#fish_collected');
+const timerTextUI = document.querySelector("#timerText");
 
 const fish1 = document.getElementById('fish_1');
 const fish2 = document.getElementById('fish_2');
@@ -70,6 +71,8 @@ let score = 0;
 let fishCollected = 0;
 
 let startTime = null;
+let raceTimer = null;
+
 let totalTimeToComplete = 0;
 let wordsPerMinute = 0;
 
@@ -158,12 +161,45 @@ function millisToMinutesAndSeconds(millis) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
+function formatTime(seconds) {
+    // Calculate minutes and remaining seconds
+    var minutes = Math.floor(seconds / 60);
+    var remainingSeconds = seconds % 60;
+
+    // Add leading zero if necessary
+    var formattedMinutes = (minutes < 10) ? "0" + minutes : minutes;
+    var formattedSeconds = (remainingSeconds < 10) ? "0" + remainingSeconds : remainingSeconds;
+
+    // Concatenate minutes and seconds with a colon
+    var formattedTime = formattedMinutes + ":" + formattedSeconds;
+
+    return formattedTime;
+}
+
+function startTimer(timer, timeout) {
+    raceTimer = setInterval(function() {
+        let timerFixedText = "Time: "+formatTime(timer);
+
+        timerTextUI.innerText = "";
+        timerTextUI.innerText = timerFixedText;
+        timer += 1;
+    }, timeout);
+
+    return raceTimer;
+}
+
 function handleInput(e) {
     const key = e.key;
 
     if (startTime == null) {
         startTime = performance.now();
     }
+    if (raceTimer == null) {
+        raceTimer = startTimer(0, 1000);
+
+        console.log("init raceTimer");
+    }
+    
 
     if (key == "CapsLock" || key == "Shift") {
         return;
@@ -192,6 +228,8 @@ function handleInput(e) {
                 console.log("correctKeysPressed:"+correctKeysPressed);
                 console.log("totalKeysPressed:"+totalKeysPressed);
 
+                
+
                 new Audio('./audio/game_victory_sound.wav').play();
 
                 let typingAccuracy = (correctKeysPressed / totalKeysPressed) * 100;
@@ -202,6 +240,12 @@ function handleInput(e) {
 
                 totalTimeToComplete = (performance.now() - startTime);
                 timeToCompleteUI.innerText = millisToMinutesAndSeconds(totalTimeToComplete);
+
+                let timerFixedText = "Time: "+formatTime(Number(timeToCompleteUI.innerText));
+                timerTextUI.InnerText = "";
+                timerTextUI.InnerText = timerFixedText;
+                clearInterval(raceTimer);
+
                 totalTimeToComplete /= 1000;
 
 
@@ -214,6 +258,7 @@ function handleInput(e) {
                 fishCollectedUI.innerText = fishCollected;
                 
                 startTime = null;
+                raceTimer = null;
                 totalTimeToComplete = 0;
                 wordsPerMinute = 0;
                 totalKeysPressed = 0;
