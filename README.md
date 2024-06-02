@@ -2,6 +2,27 @@
 
 -------------------------
 
+```
+### Running the React Project
+
+To run the React project, follow these steps:
+
+1. Navigate to the project folder using your terminal:
+   ```
+   cd /path/to/project/folder
+   ```
+
+2. Once inside the project folder, start the server by running the following command:
+   ```
+   npm run dev
+   ```
+
+This command will start the server and you should be able to access the React project in your web browser.
+
+If you encounter any issues or have any questions, feel free to ask!
+
+```
+
 🦈🔤 Dive into the Excitement with SharkTypers! 🦈🔤
 
 🎉 **Introducing SharkTypers:** A Thrilling Typing Game Adventure! 🎉
