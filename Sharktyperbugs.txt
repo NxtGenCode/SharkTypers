@@ -1,3 +1,0 @@
-Bugs
-----------
-[FIXED] If you type any other key besides Enter or Space after a completed word it will return null. 

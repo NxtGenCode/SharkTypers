@@ -1,44 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>SharkTypers - Play & Type!</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="favicon.ico" type="image/vnd.microsoft.icon">
-        <link rel="stylesheet" href="./css/main.css">
-    </head>
-    <body>
-        <div class="container">
-            <header>
-                <div id="logo">
-                    <a href="index.html">
-                        <img src="./img/logo.png" width="320" height="100%" alt="Shark Typers"/>
-                    </a>
-                </div>
-                <div class="nav">
-                    <ul>
-                        <li class="mobile-button"><img src="./img/nav-menu.png" width="48" height="48" alt="Mobile Navigation"/></li>
-                        <div class="hide-mobile">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Updates</a></li>
-                        <li><a href="#">HighScores</a></li>
-                        <li><a href="#">Create An Account</a></li>
-                        </div>
-                    </ul>
-                </div>
-            </header>
-            <div class="mainViewPort">
-            <div id="type-racer-box">
-                <div id="game-text">
-                    <!--Game Spans Load Here-->
-                </div>
-                <input id="user-input" type="text" placeholder="Enter Text Here" maxlength="16">
-                <div class="racer-buttons">
-                    <a href="index.html"><button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button></a>
-                </div>
-            </div>
-            <footer>© SharkTypers 2024</footer>
-        </div>
-        <script src="./js/main.js"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SharkTypers - Play & Type!</title>
+  </head>
+  <body>
+    <div id="root" class="container"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
