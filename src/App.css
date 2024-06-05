@@ -62,6 +62,7 @@ h2{
 .welcome-block{
   display: flex;
   flex-direction: row;
+  border-radius: 15px;
   background-color: #331bac;
   border:2px solid #000;
 }
@@ -96,9 +97,11 @@ h2{
 }
 
 button#play{
+  width: 100%;
   background-color:green;
 }
 
 button#create{
+  width: 100%;
   background-color:rebeccapurple;
 }

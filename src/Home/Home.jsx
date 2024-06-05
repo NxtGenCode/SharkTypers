@@ -1,9 +1,10 @@
 import React, {useState} from "react";
+import { Link } from "react-router-dom";
 
 
 function Home(){
 
-    const [src, setSrc] = useState('./sharks/red-shark.png');
+    const [src, setSrc] = useState('./sharks/default-shark.png');
 
     function changeColor(e) {
         setSrc('./sharks/' + `${e.target.id}` + '-shark.png');
@@ -33,8 +34,8 @@ function Home(){
                         </div>
                     </div>
                     <div className="welcome-buttons">
-                        <button id="play" type="button">PLAY</button>
-                        <button id="create" type="button">CREATE ACCOUNT</button>
+                        <Link to={`/play`}><button id="play" type="button">PLAY NOW!</button></Link>
+                        <Link to={`/login`}><button id="create" type="button">Login/Create An Account</button></Link>
                     </div>
                 </div>
             </section>

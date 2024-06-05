@@ -1,14 +1,14 @@
 import './App.css'
 import './index.css'
 import Header from './Header/Header'
-import SharkTyperBox from './SharkTyperBox/SharkTyperBox';
+import Home from './Home/Home'
 
 function App() {
 
   return(
         <>
         <Header/>
-        <SharkTyperBox/>
+        <Home/>
         </>
   );
 }

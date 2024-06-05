@@ -1,3 +1,5 @@
+import Header from '../Header/Header'
+
 import REEF from '../assets/imgs/reef.png'
 import MEDAL from '../assets/imgs/medal.png'
 import SHARK from '../assets/imgs/sharks/blue-shark.png'
@@ -10,8 +12,9 @@ import COLLECT_FISH_SOUND_2 from '../assets/audio/collect_fish_sound_2.wav'
 import COLLECT_FISH_SOUND_3 from '../assets/audio/collect_fish_sound_3.wav'
 
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
-import useSound from 'use-sound'
+import useSound from 'use-sound';
 
 function SharkTyperBox() {
     const [playVictorySound] = useSound(VICTORY_SOUND);
@@ -392,6 +395,8 @@ function SharkTyperBox() {
     }
 
     return (
+        <>
+        <Header/>
         <div className="mainViewPort">
             <div id="type-racer-box">
                 <div id="shark-area">
@@ -413,7 +418,7 @@ function SharkTyperBox() {
                 </div>
                 <input ref={userInputBox} id="user-input" onKeyDown={(e) => handleInput(e)} type="text" placeholder="Enter Text Here" maxLength="16" />
                 <div className="racer-buttons">
-                    <a href="index.html"><button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button></a>
+                    <Link to={`/`}><button id="mainMenu-btn" type="button">Main Menu (Leave Race)</button></Link>
                 </div>
                 <div id="completed-race-ui" ref={completedRaceUI}>
                     <h1>🏆 You Finished The Race! 🏆</h1>
@@ -429,6 +434,7 @@ function SharkTyperBox() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

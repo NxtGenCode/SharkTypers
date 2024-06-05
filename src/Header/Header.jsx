@@ -1,6 +1,8 @@
 import Logo from '../assets/imgs/logo.png'
 import DefaultAvatar from '../assets/imgs/default-avatar.png'
 import MobileNavIcon from '../assets/imgs/nav-menu.png'
+
+import { Link } from "react-router-dom";
 import { useState } from 'react';
 
 function Header(){
@@ -26,19 +28,19 @@ function Header(){
         <header>
                 <div className="header-left">
                 <div id="logo">
-                    <a href="index.html">
+                    <Link to={`/`}>
                         <img src={Logo} width="320" height="100%" alt="Shark Typers"/>
-                    </a>
+                    </Link>
                 </div>
                 <div className="nav">
                     <ul>
                         <li className="mobile-button"><img src={MobileNavIcon} width="48" height="48" alt="Mobile Navigation"/></li>
                         <div className="hide-mobile">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="play.html">Play Now</a></li>
+                        <li><Link to={`/`}>Home</Link></li>
+                        <li><Link to={`/play`}>Play Now</Link></li>
                         <li><a href="#">Updates</a></li>
                         <li><a href="#">HighScores</a></li>
-                        <li><a href="#">Sign In</a></li>
+                        <li><Link to={`/login`}>Sign In</Link></li>
                         </div>
                     </ul>
                 </div>

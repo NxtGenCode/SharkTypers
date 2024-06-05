@@ -58,6 +58,42 @@ span.active-character::before {
   }
 }
 
+#login-area{
+  font-family: Arial, Helvetica, sans-serif;
+  min-width: 960px;
+  display: flex;
+  flex-flow:column nowrap;
+  margin:auto;
+  align-items:center;
+  background-color: #331bac;
+  padding:25px;
+  border:2px solid #000;
+  border-radius: 15px;
+}
+
+#login-area input[type="text"], #login-area input[type="password"], #login-area input[type="submit"]{
+  display: flex;
+  width:100%;
+  padding: 25px;
+  font-size:1.5em;
+  background: #1c0f62;
+  color: #Fff;
+  margin: 5px;
+  border-radius: 1em;
+  border:2px solid #9303cd;
+}
+
+#login-area input[type="submit"]{
+  cursor: pointer;
+  border:2px solid #000;
+}
+
+#error-page{
+  display: flex;
+  flex-flow:column wrap;
+  align-self: center;
+}
+
 .player {
   display: flex;
   position: relative;
