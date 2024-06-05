@@ -1,6 +1,6 @@
-import Logo from '../assets/logo.png'
-import DefaultAvatar from '../assets/default-avatar.png'
-import MobileNavIcon from '../assets/nav-menu.png'
+import Logo from '../assets/imgs/logo.png'
+import DefaultAvatar from '../assets/imgs/default-avatar.png'
+import MobileNavIcon from '../assets/imgs/nav-menu.png'
 import { useState } from 'react';
 
 function Header(){

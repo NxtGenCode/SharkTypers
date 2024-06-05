@@ -1,12 +1,35 @@
-import REEF from '../assets/reef.png'
-import MEDAL from '../assets/medal.png'
-import SHARK from '../assets/sharks/blue-shark.png'
+import REEF from '../assets/imgs/reef.png'
+import MEDAL from '../assets/imgs/medal.png'
+import SHARK from '../assets/imgs/sharks/blue-shark.png'
+
+import VICTORY_SOUND from '../assets/audio/game_victory_sound.wav'
+import UNDER_WATER_SOUND from '../assets/audio/underwater_ambience.wav'
+import TYPING_ERROR_SOUND from '../assets/audio/error_sound.wav'
+import COLLECT_FISH_SOUND_1 from '../assets/audio/collect_fish_sound_1.wav'
+import COLLECT_FISH_SOUND_2 from '../assets/audio/collect_fish_sound_2.wav'
+import COLLECT_FISH_SOUND_3 from '../assets/audio/collect_fish_sound_3.wav'
+
 import { useRef } from 'react';
 
+import useSound from 'use-sound'
+
 function SharkTyperBox() {
+    const [playVictorySound] = useSound(VICTORY_SOUND);
+    const [playWaterSound] = useSound(UNDER_WATER_SOUND);
+    const [playErrorSound] = useSound(TYPING_ERROR_SOUND);
+
+    playWaterSound();
+
+    const playerDisplayNameUI = useRef(null);
+    const player = useRef(null);
+    const playerShark = useRef(null);
+    const typingAccuracyUI = useRef(null);
+    const timeToCompleteUI = useRef(null);
+    const wordsPerMinuteUI = useRef(null);
+    const fishCollectedUI = useRef(null);
+    const scoreUI = useRef(null);
 
     const completedRaceUI = useRef(null);
-
     const completedWords = useRef(null);
     const correctKeys = useRef(null);
     const nextKey = useRef(null);
@@ -47,6 +70,27 @@ function SharkTyperBox() {
     let correctKeysPressed = 0;
     let completedWordCount = null;
     let lastCorrectKeyProgress = null;
+
+    function millisToMinutesAndSeconds(millis) {
+        var minutes = Math.floor(millis / 60000);
+        var seconds = ((millis % 60000) / 1000).toFixed(0);
+        return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    }
+
+    function formatTime(seconds) {
+        // Calculate minutes and remaining seconds
+        var minutes = Math.floor(seconds / 60);
+        var remainingSeconds = seconds % 60;
+    
+        // Add leading zero if necessary
+        var formattedMinutes = (minutes < 10) ? "0" + minutes : minutes;
+        var formattedSeconds = (remainingSeconds < 10) ? "0" + remainingSeconds : remainingSeconds;
+    
+        // Concatenate minutes and seconds with a colon
+        var formattedTime = formattedMinutes + ":" + formattedSeconds;
+    
+        return formattedTime;
+    }
 
     function currentWordToType() {
         if (currentIncorrectWordIndex >= 1) {
@@ -107,6 +151,7 @@ function SharkTyperBox() {
                 lastCorrectKeyProgress = null;
                 userInputBox.current.style.backgroundColor = "#FFFFFF";
 
+                // WINNING CONDITION
                 if (!currentWordToType()) {
                     currentWordIndex--;
                     currentIncorrectWordIndex--;
@@ -115,7 +160,39 @@ function SharkTyperBox() {
 
                     console.log("correctKeysPressed:"+correctKeysPressed);
                     console.log("totalKeysPressed:"+totalKeysPressed);
+                    playVictorySound();
+                    
+                    let typingAccuracy = (correctKeysPressed / totalKeysPressed) * 100;
+                    typingAccuracyUI.current.innerText = Math.floor(typingAccuracy)+'%';
 
+                    score = typingAccuracy * 3;
+                    scoreUI.current.innerText = Math.floor(score);
+
+                    totalTimeToComplete = (performance.now() - startTime);
+                    timeToCompleteUI.current.innerText = millisToMinutesAndSeconds(totalTimeToComplete);
+
+                    //let timerFixedText = "Time: "+formatTime(Number(timeToCompleteUI.innerText));
+                    //timerTextUI.current.InnerText = "";
+                    //timerTextUI.current.InnerText = timerFixedText;
+                    clearInterval(raceTimer);
+
+                    totalTimeToComplete /= 1000;
+
+
+                    let timeDiffInMinutes = totalTimeToComplete / 60;
+                    let wordCount = currentWordObj.length;
+                    let wpm = wordCount / timeDiffInMinutes;
+                    wordsPerMinute = wpm;
+                    wordsPerMinuteUI.current.innerText = Math.round(wordsPerMinute) + " WPM";
+
+                    fishCollectedUI.current.innerText = fishCollected;
+                    
+                    startTime = null;
+                    raceTimer = null;
+                    totalTimeToComplete = 0;
+                    wordsPerMinute = 0;
+                    totalKeysPressed = 0;
+                    correctKeysPressed = 0;
                     return;
                 }
 
@@ -237,6 +314,8 @@ function SharkTyperBox() {
                 userInputBox.current.value += " ";
             }
 
+            playErrorSound();
+
             if (nextCharToType() != undefined) {
                 incorrectKeys.current.innerHTML += nextCharToType();
                 currentCharIndex++;
@@ -290,6 +369,14 @@ function SharkTyperBox() {
             correctKeysPressed += 1;
             totalKeysPressed += 1;
 
+            if (lastCorrectKeyProgress < currentCharIndex) {
+                let percentageCompleted = Math.fround((correctKeys.current.innerText.length + completedWords.current.innerText.length) / selectedPrompt.length).toFixed(2);
+                console.log("Complete Percentage: "+percentageCompleted * 100+"%");
+    
+                playerDisplayNameUI.current.style.left = `${percentageCompleted * 100}` + "%";
+                playerShark.current.style.left = `${percentageCompleted * 100}` + "%";
+            }
+
             if (!nextCharToType()) {
                 nextKey.current.innerHTML = "";
                 return;
@@ -308,10 +395,10 @@ function SharkTyperBox() {
         <div className="mainViewPort">
             <div id="type-racer-box">
                 <div id="shark-area">
-                    <div className="player">
+                    <div ref={player} className="player">
                         <div className="progress-line"></div>
-                        <p id="player_display_name">ImpactHills</p>
-                        <img id="player_shark" src={SHARK} width="64" height="64" alt="your shark" />
+                        <p ref={playerDisplayNameUI} id="player_display_name">ImpactHills</p>
+                        <img ref={playerShark} id="player_shark" src={SHARK} width="64" height="64" alt="your shark" />
                         <img id="fish_1" src={REEF} width="64" height="64" alt="A fish" />
                         <img id="award" src={MEDAL} width="64" height="64" alt="A Medal For The Finish" />
                     </div>
@@ -332,11 +419,11 @@ function SharkTyperBox() {
                     <h1>🏆 You Finished The Race! 🏆</h1>
                     <b>You Placed #1!</b>
                     <ul className="stats">
-                        <li>Score: <span id="score" style={{color: 'gold', paddingLeft: '5px'}}>3114</span></li>
-                        <li>Accuracy:<span id="typing_accuracy" style={{color: 'gold', paddingLeft: '5px'}}>98%</span></li>
-                        <li>Time: <span id="time_to_complete" style={{color: 'gold', paddingLeft: '5px'}}>2:15</span></li>
-                        <li>Speed:<span id="words_per_minute" style={{color: 'gold', paddingLeft: '5px'}}>98 WPM</span></li>
-                        <li>Fish: <span id="fish_collected" style={{color: 'orange', paddingLeft: '5px'}}>99</span></li>
+                        <li>Score: <span ref={scoreUI} id="score" style={{color: 'gold', paddingLeft: '5px'}}>3114</span></li>
+                        <li>Accuracy:<span ref={typingAccuracyUI} id="typing_accuracy" style={{color: 'gold', paddingLeft: '5px'}}>98%</span></li>
+                        <li>Time: <span ref={timeToCompleteUI} id="time_to_complete" style={{color: 'gold', paddingLeft: '5px'}}>2:15</span></li>
+                        <li>Speed:<span ref={wordsPerMinuteUI} id="words_per_minute" style={{color: 'gold', paddingLeft: '5px'}}>98 WPM</span></li>
+                        <li>Fish: <span ref={fishCollectedUI} id="fish_collected" style={{color: 'orange', paddingLeft: '5px'}}>99</span></li>
                     </ul>
                     <a href="index.html"><button type="button">Continue</button></a> <b>OR</b> <a href="index.html"><button type="button" style={{background: 'green'}}>Play Again</button></a>
                 </div>
