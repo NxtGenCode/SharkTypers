@@ -14,8 +14,20 @@ import { useRef } from 'react';
 import useSound from 'use-sound'
 
 function SharkTyperBox() {
-    const [playVictorySound] = useSound(VICTORY_SOUND);
-    const [playWaterSound] = useSound(UNDER_WATER_SOUND);
+
+    const [playVictorySound] = useSound(VICTORY_SOUND, {
+        onend: () => {
+          console.info('Sound ended!');
+        },
+      });
+
+    const [playWaterSound] = useSound(UNDER_WATER_SOUND, {
+        onend: () => {
+            playWaterSound();
+            console.info("testing!");
+        },
+    });
+
     const [playErrorSound] = useSound(TYPING_ERROR_SOUND);
 
     playWaterSound();
