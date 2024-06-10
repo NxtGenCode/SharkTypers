@@ -21,7 +21,7 @@ function SharkTyperBox() {
     const [playWaterSound] = useSound(UNDER_WATER_SOUND);
     const [playErrorSound] = useSound(TYPING_ERROR_SOUND);
 
-    playWaterSound();
+    //playWaterSound();
 
     const playerDisplayNameUI = useRef(null);
     const player = useRef(null);

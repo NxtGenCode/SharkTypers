@@ -1,7 +1,7 @@
+import Header from './Header/Header.jsx'
+import Home from './Home/Home.jsx'
 import './App.css'
 import './index.css'
-import Header from './Header/Header'
-import Home from './Home/Home'
 
 function App() {
 
