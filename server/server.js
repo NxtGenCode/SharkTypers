@@ -1,42 +1,53 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3000
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
-const uri = "mongodb+srv://easy317:psNqjgHP4oQ0xkgj@sharktyper.youhd87.mongodb.net/sharktypers";
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//connect to the mongodb database url - "/sharktypers" - is the database collection we're accessing.
+const uri = "mongodb+srv://easy317:football12345@sharktyper.youhd87.mongodb.net/sharktypers";
+
+mongoose.connect(uri);
 
 const { Schema } = mongoose;
-const hiscoreSchema = new Schema({
-  username: String, // String is shorthand for {type: String}
-  score: Number,
-  wins: Number,
-  losses: Number,
+const userSchema = new Schema({
+  username: { type: String },
+  password: { type: String },
+  email: { type: String },
+  role: { type: String }
 });
 
-app.get('/', (req, res) => {
-  res.send('hello')
-  main().catch(err => console.log(err));
-})
+const User = mongoose.model('users', userSchema);
 
-app.get('/api/login', (req, res) => {
-  res.send('creating new')
-  register().catch(err => console.log(err));
-})
+app.post('/api/register', async (req, res) => {
+  const { username, password } = req.body;
 
-async function register() {
-  await mongoose.connect(uri);
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
-  const User = mongoose.model('Users', hiscoreSchema);
+    // Create new user
+    const newUser = new User({
+      username,
+      password
+    });
 
-  await User.create({
-    username: 'Brolly',
-    score: 200000,
-    wins: 100003455,
-    losses: 0
-  });
+    // Save new user to database
+    await newUser.save();
 
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
+    res.status(201).json({ message: 'User created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening on PORT: ${PORT}`)
