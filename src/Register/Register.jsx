@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-function Login() {
+function Register() {
 
     const [formData, setFormData] = useState({
         username: '',
-        password: ''
+        password: '',
+        email: ''
     });
 
     const handleChange = (e) => {
@@ -19,7 +20,7 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post('/api/login', formData);
+            const response = await axios.post('/api/register', formData);
             console.log(response.data); // Handle success response
         } catch (error) {
             console.error(error.response.data); // Handle error response
@@ -30,8 +31,8 @@ function Login() {
         <>
             <Header />
             <div id="login-area">
-                <h1>Login</h1>
-                <div className="login-area-links"> <h2 style={{ paddingRight: '15px' }}>Login</h2> <Link to={`/register`}><h2>Register</h2></Link> </div>
+                <h1>Register</h1>
+                <div className="login-area-links"> <h2 style={{ paddingRight: '15px' }}>Register</h2> <Link to={`/login`}><h2>Login</h2></Link> </div>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <label>Username:</label>
@@ -53,11 +54,21 @@ function Login() {
                             required
                         />
                     </div>
-                    <button type="submit">Login</button>
+                    <div>
+                        <label>Email:</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Register Account</button>
                 </form>
             </div>
         </>
     )
 }
 
-export default Login
+export default Register

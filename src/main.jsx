@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import Login from './Login/Login.jsx';
+import Register from './Register/Register.jsx';
 import SharkTyperBox from './SharkTyperBox/SharkTyperBox.jsx';
 import ErrorPage from './Error/ErrorPage.jsx';
 import './index.css';
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login/>
+  },
+  {
+    path: "/register",
+    element: <Register/>
   }
 ]);
 

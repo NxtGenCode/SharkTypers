@@ -71,7 +71,12 @@ span.active-character::before {
   border-radius: 15px;
 }
 
-#login-area input[type="text"], #login-area input[type="password"], #login-area input[type="submit"]{
+.login-area-links{
+  display: flex;
+  flex-direction: row;
+}
+
+#login-area input[type="text"], #login-area input[type="password"], #login-area input[type="submit"], #login-area input[type="email"]{
   display: flex;
   width:100%;
   padding: 25px;
