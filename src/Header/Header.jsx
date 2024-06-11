@@ -3,26 +3,8 @@ import DefaultAvatar from '../assets/imgs/default-avatar.png'
 import MobileNavIcon from '../assets/imgs/nav-menu.png'
 
 import { Link } from "react-router-dom";
-import { useState } from 'react';
 
 function Header(){
-
-    const [tabIndex, setTabIndex] = useState(0);
-
-    function setTabIndexId(id){
-      setTabIndex(id);
-      switch(tabIndex){
-          case 0:
-              console.log('hi')
-              break;
-          case 1:
-              
-              console.log('bye')
-              break;
-          default:
-              console.log('No index found.')
-      }
-  }
 
     return(
         <header>
@@ -40,16 +22,18 @@ function Header(){
                         <li><Link to={`/play`}>Play Now</Link></li>
                         <li><a href="#">Updates</a></li>
                         <li><a href="#">HighScores</a></li>
-                        <li><Link to={`/login`}>Sign In</Link></li>
+                        <li><Link to={`/login`}>Login/Register</Link></li>
                         </div>
                     </ul>
                 </div>
                 </div>
                 <div className="header-right">
                     <div className="user-nav-ui">
-                        <div className="user-avatar">
+                    <Link to={`/login`}>
+                    <div className="user-avatar">
                             <img id="avatar" src={DefaultAvatar} width="32" height="32" alt="Your Avatar" title="View Profile"/>
-                        </div>
+                    </div>
+                    </Link>
                         <h2>Welcome Guest! Sign In to experience the full shark typer fun!</h2>
                     </div>
                 </div>
