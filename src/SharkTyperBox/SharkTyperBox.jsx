@@ -18,10 +18,14 @@ import useSound from 'use-sound';
 
 function SharkTyperBox() {
     const [playVictorySound] = useSound(VICTORY_SOUND);
-    const [playWaterSound] = useSound(UNDER_WATER_SOUND);
-    const [playErrorSound] = useSound(TYPING_ERROR_SOUND);
+    const [playErrorSound] = useSound(TYPING_ERROR_SOUND, );
 
-    //playWaterSound();
+    const [playWaterSound] = useSound(UNDER_WATER_SOUND);
+    const [play, { stop, isPlaying }] = useSound(soundUrl);
+    
+
+    playWaterSound();
+    console.log(playWaterSound);
 
     const playerDisplayNameUI = useRef(null);
     const player = useRef(null);
@@ -430,7 +434,7 @@ function SharkTyperBox() {
                         <li>Speed:<span ref={wordsPerMinuteUI} id="words_per_minute" style={{color: 'gold', paddingLeft: '5px'}}>98 WPM</span></li>
                         <li>Fish: <span ref={fishCollectedUI} id="fish_collected" style={{color: 'orange', paddingLeft: '5px'}}>99</span></li>
                     </ul>
-                    <a href="index.html"><button type="button">Continue</button></a> <b>OR</b> <a href="index.html"><button type="button" style={{background: 'green'}}>Play Again</button></a>
+                    <Link to={`/`}><button type="button">Main Menu</button></Link> <b>OR</b> <a href="/play"><button type="button" style={{background: 'green'}}>Play Again</button></a>
                 </div>
             </div>
         </div>
